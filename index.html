@@ -61,8 +61,9 @@ input, select, textarea { font: inherit; color: inherit; }
 /* 머리: 큰 날짜, 스크롤과 함께 올라간다 */
 .head .wrap { display: flex; justify-content: space-between; align-items: flex-end; padding-top: 20px; padding-bottom: 4px; }
 .date { display: flex; align-items: baseline; gap: 8px; }
-.date b { font-size: 34px; line-height: 38px; font-weight: 600; letter-spacing: -.02em; }
-.date span { font-size: 20px; line-height: 24px; color: var(--muted); }
+.date { font-size: 13px; line-height: 18px; color: var(--muted); gap: 4px; }
+.date b { font-weight: 600; color: var(--ink); }
+.date span { color: var(--muted); }
 .head .sync { text-align: right; padding-bottom: 4px; }
 .page-h { display: flex; justify-content: space-between; align-items: baseline; margin: 20px 0 8px; }
 .group-h { display: flex; justify-content: space-between; align-items: baseline; margin: 28px 0 8px; }
@@ -73,6 +74,18 @@ input, select, textarea { font: inherit; color: inherit; }
 /* DASHBOARD */
 .hero { padding: 8px 0 4px; }
 .hero.center { text-align: center; padding: 18px 0 20px; }
+.view-h { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin: 22px 0 10px; }
+.seg.mini { display: inline-flex; background: var(--well); border-radius: 999px; padding: 3px; }
+.seg.mini button { font-size: 12px; line-height: 16px; padding: 6px 12px; border-radius: 999px; color: var(--muted); }
+.seg.mini button[aria-pressed="true"] { background: var(--page); color: var(--ink); font-weight: 600; box-shadow: 0 1px 2px rgba(0,0,0,.06); }
+.more-btn { display: block; margin: 8px auto 0; padding: 8px 14px; }
+.cal-h { margin-top: 0; }
+#eDate { display: flex; align-items: center; text-align: left; min-height: 44px; line-height: 20px; -webkit-appearance: none; appearance: none; }
+#eDate::-webkit-date-and-time-value { text-align: left; margin: 0; }
+#eDate::-webkit-datetime-edit { padding: 0; }
+.fx-toggle { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 22px 0 10px; }
+.fx-toggle svg { width: 14px; height: 14px; opacity: .5; transition: transform .2s; }
+.fx-note { margin: 0 0 8px; line-height: 17px; }
 .hero .pct { font-size: 56px; line-height: 60px; font-weight: 300; letter-spacing: -.04em; }
 .hero .pct small { font-size: 20px; letter-spacing: -.01em; font-weight: 400; margin-right: 6px; vertical-align: 6px; color: var(--muted); }
 .hero .pct.over { color: var(--orange); }
@@ -88,7 +101,7 @@ input, select, textarea { font: inherit; color: inherit; }
 #lBody .eq { padding: 4px 16px; }
 #lBody .eq .row { cursor: default; }
 .ic { display: inline-block; width: 24px; font-size: 15px; }
-.k.area.over { background: var(--orange); opacity: .9; }
+.k.area.over { background: var(--mustard); opacity: 1; }
 .k.tickk { width: 2px; height: 10px; border: 0; background: var(--ink); opacity: .45; border-radius: 1px; }
 .subcats .cat.leaf { cursor: pointer; }
 .entries { padding: 2px 0 8px 22px; }
@@ -143,7 +156,7 @@ input, select, textarea { font: inherit; color: inherit; }
 .tile.goal .sub { color: inherit; opacity: .75; }
 #asYears { margin-top: 8px; }
 .trend.proj { height: 150px; }
-.cbar .debt { background: var(--orange); }
+.cbar .debt { background: color-mix(in srgb, var(--ink) 35%, transparent); }
 .k.area { border-top: 0; height: 8px; border-radius: 2px; background: var(--olive); opacity: .85; }
 .k.area.principal { background: var(--ink); opacity: .14; }
 .pills.quick { margin: 8px 0 16px; }
@@ -153,13 +166,12 @@ input, select, textarea { font: inherit; color: inherit; }
 .legend span { display: inline-flex; align-items: center; gap: 5px; }
 .lg { display: inline-block; width: 10px; height: 6px; border-radius: 2px; background: var(--olive); }
 .lg.was { background: var(--ink); opacity: .14; }
-.cats { padding: 4px 16px; }
-.cat { display: block; width: 100%; text-align: left; padding: 10px 0; }
-.cat + .cat, .subcats + .cat { box-shadow: 0 -.5px 0 var(--line); }
+.cats { padding: 10px 18px; }
+.cat { display: block; width: 100%; text-align: left; padding: 12px 0; }
 .cat .top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
 .cat .name { font-size: 14px; line-height: 19px; }
 .cat .amt { font-size: 14px; white-space: nowrap; }
-.cbar { position: relative; display: block; height: 8px; margin-top: 7px; border-radius: 4px; background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.cbar { position: relative; display: block; height: 6px; margin-top: 9px; border-radius: 3px; background: color-mix(in srgb, var(--ink) 6%, transparent); }
 .cbar i { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 4px; }
 .cbar .was { background: color-mix(in srgb, var(--ink) 9%, transparent); }
 .cbar .now { background: var(--olive); }
@@ -226,7 +238,7 @@ input, select, textarea { font: inherit; color: inherit; }
 .cal-g button .v { font-size: 10px; line-height: 12px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .cal-g button .z { position: absolute; top: 8px; right: 7px; width: 5px; height: 5px; border-radius: 50%; background: var(--olive); }
 .cal-g button.future { opacity: .35; }
-.cal-g button.today .d { color: var(--orange); font-weight: 600; }
+.cal-g button.today .d { color: var(--olive); font-weight: 600; box-shadow: inset 0 -1.5px 0 var(--olive); border-radius: 0; }
 .cal-g button[aria-pressed="true"] { background: var(--soft); }
 .cal-g button.out { visibility: hidden; }
 .cal-legend { display: flex; justify-content: space-between; padding: 8px 8px 0; }
@@ -277,8 +289,8 @@ input, select, textarea { font: inherit; color: inherit; }
 .keys button:active { background: var(--soft); }
 .keys button.fn { background: transparent; font-size: 13px; color: var(--muted); }
 .keys svg { width: 20px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; vertical-align: middle; }
-.nav { height: 56px; padding: 4px; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); border-radius: 999px; }
-.nav button { position: relative; display: grid; justify-items: center; align-content: center; gap: 3px; border-radius: 999px; color: var(--muted); font-size: 8px; font-weight: 600; letter-spacing: .02em; min-width: 0; overflow: hidden; }
+.nav { height: 56px; padding: 4px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-radius: 999px; }
+.nav button { position: relative; display: grid; justify-items: center; align-content: center; gap: 3px; border-radius: 999px; color: var(--muted); font-size: 9px; font-weight: 600; letter-spacing: .04em; min-width: 0; overflow: hidden; }
 .nav button[aria-current="page"] { background: var(--glass-sel); color: var(--ink); }
 .nav svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .nav .cnt { position: absolute; top: 5px; left: calc(50% + 9px); font-size: 10px; font-style: normal; color: var(--orange); letter-spacing: 0; }
@@ -291,8 +303,8 @@ input, select, textarea { font: inherit; color: inherit; }
 .date-input { position: absolute; opacity: 0; pointer-events: none; width: 1px; height: 1px; }
 
 /* 시트 */
-.backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, .4); opacity: 0; pointer-events: none; transition: opacity .2s; z-index: 20; }
-.backdrop.on { opacity: 1; pointer-events: auto; }
+.backdrop { position: fixed; inset: 0; background: transparent; opacity: 0; visibility: hidden; pointer-events: none; transition: opacity .2s, visibility 0s linear .2s, background-color 0s linear .2s; z-index: 20; }
+.backdrop.on { background: rgba(0, 0, 0, .4); opacity: 1; visibility: visible; pointer-events: auto; transition: opacity .2s; }
 .sheet {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 21; max-height: 76vh; display: flex; flex-direction: column;
   max-width: 520px; margin: 0 auto; background: var(--page); border-radius: 14px 14px 0 0;
@@ -365,10 +377,30 @@ input, select, textarea { font: inherit; color: inherit; }
     </div>
 
 
-    <!-- 3. 카테고리 -->
-    <div id="catWrap" hidden>
-      <div class="group-h"><span class="label">카테고리</span><span class="legend detail" id="catKey"><span><i class="k area"></i>이번 달</span><span><i class="k area over"></i>평소보다 더</span><span><i class="k tickk"></i>평소</span></span></div>
+    <!-- 3. 카테고리 / 캘린더 -->
+    <div class="view-h">
+      <div class="seg mini" id="dashView"><button data-v="cat">카테고리</button><button data-v="cal">캘린더</button></div>
+      <span class="legend detail" id="catKey"><span><i class="k area"></i>이번 달</span><span><i class="k area over"></i>초과</span><span><i class="k tickk"></i>평달</span></span>
+    </div>
+    <div id="catWrap">
       <div class="rows cats" id="cats"></div>
+      <button class="more-btn detail" id="catMore" hidden></button>
+    </div>
+    <div id="calWrap" hidden>
+    <div class="page-h cal-h">
+      <span class="overline" id="calTitle">November</span>
+      <span class="cal-nav">
+        <button class="icon-btn" id="calPrev" aria-label="이전 달"><svg viewBox="0 0 14 14"><path d="M9 2.5 4.5 7 9 11.5"/></svg></button>
+        <button class="icon-btn" id="calNext" aria-label="다음 달"><svg viewBox="0 0 14 14"><path d="M5 2.5 9.5 7 5 11.5"/></svg></button>
+      </span>
+    </div>
+    <div class="cal">
+      <div class="cal-w"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span></div>
+      <div class="cal-g" id="calGrid"></div>
+      <div class="cal-legend"><span class="detail" id="calTotal"></span><span class="detail">점은 고정비 말고는 안 쓴 날</span></div>
+    </div>
+    <div class="group-h"><span class="label" id="dayTitle"></span><span class="label num" id="dayTotal"></span></div>
+    <div id="dayList"></div>
     </div>
 
   </section>
@@ -379,27 +411,12 @@ input, select, textarea { font: inherit; color: inherit; }
     <div id="inbox"></div>
     <p class="label empty-note" id="inboxEmpty">알림에서 온 결제를 모두 확인했어요</p>
     <div id="fixedWrap" hidden>
-      <div class="group-h"><span class="label">아직 안 적은 고정비</span><span class="detail">누르면 시트에 적어요</span></div>
-      <div class="rows" id="fixed"></div>
+      <button class="fx-toggle" id="fxToggle"><span class="label" id="fxLabel">고정비 체크</span><svg viewBox="0 0 14 14" id="fxChev"><path d="M3 5.5 7 9.5 11 5.5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></button>
+      <div id="fxBody" hidden>
+        <p class="detail fx-note">지난 두 달에 있었는데 이번 달엔 안 보이는 것들이에요. 이름이 바뀐 항목도 섞일 수 있어요. 누르면 시트에 적어요.</p>
+        <div class="rows" id="fixed"></div>
+      </div>
     </div>
-  </section>
-
-  <!-- CALENDAR -->
-  <section class="tab-page" data-tab="cal" hidden>
-    <div class="page-h">
-      <span class="overline" id="calTitle">November</span>
-      <span class="cal-nav">
-        <button class="icon-btn" id="calPrev" aria-label="이전 달"><svg viewBox="0 0 14 14"><path d="M9 2.5 4.5 7 9 11.5"/></svg></button>
-        <button class="icon-btn" id="calNext" aria-label="다음 달"><svg viewBox="0 0 14 14"><path d="M5 2.5 9.5 7 5 11.5"/></svg></button>
-      </span>
-    </div>
-    <div class="cal">
-      <div class="cal-w"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span></div>
-      <div class="cal-g" id="calGrid"></div>
-      <div class="cal-legend"><span class="detail" id="calTotal"></span><span class="detail">점은 무지출일</span></div>
-    </div>
-    <div class="group-h"><span class="label" id="dayTitle"></span><span class="label num" id="dayTotal"></span></div>
-    <div id="dayList"></div>
   </section>
 
   <!-- PALIMPSEST -->
@@ -487,7 +504,6 @@ input, select, textarea { font: inherit; color: inherit; }
   <nav class="nav glass" id="nav" aria-label="탭">
     <button data-go="dash" aria-current="page"><svg viewBox="0 0 24 24"><path d="M6 18.5V13M12 18.5V6M18 18.5v-8"/></svg>DASHBOARD</button>
     <button data-go="inbox"><svg viewBox="0 0 24 24"><path d="M4.5 13.5 6.8 6.5h10.4l2.3 7M4.5 13.5V18h15v-4.5M4.5 13.5h4l1 2h5l1-2h4"/></svg><i class="cnt" id="cntInbox"></i>INBOX</button>
-    <button data-go="cal"><svg viewBox="0 0 24 24"><path d="M5 7.5h14V19H5zM5 11h14M9 5v4M15 5v4"/></svg>CALENDAR</button>
     <button data-go="pal"><svg viewBox="0 0 24 24"><path d="M7 4.5h10v15l-2-1.3-1.7 1.3-1.3-1.3-1.3 1.3L9 18.2l-2 1.3zM9.5 9h5M9.5 12.5h5"/></svg><i class="cnt" id="cntPal"></i>PALIMPSEST</button>
     <button data-go="assets"><svg viewBox="0 0 24 24"><path d="M4 19h16M6 16v-4M10 16V8M14 16v-6M18 16V5"/></svg>ASSETS</button>
     <button data-go="set"><svg viewBox="0 0 24 24"><path d="M4 7.5h9M17 7.5h3M4 16.5h3M11 16.5h9"/><circle cx="15" cy="7.5" r="2"/><circle cx="9" cy="16.5" r="2"/></svg>SETTINGS</button>
@@ -593,7 +609,8 @@ const S = {
   pickedDate: null,
   queue: readLS(LS_QUEUE) || [],
   justAdded: [],
-  tab: readLS('mb.tab') || 'dash',
+  tab: ['dash', 'inbox', 'pal', 'assets', 'set'].indexOf(readLS('mb.tab')) >= 0 ? readLS('mb.tab') : 'dash',
+  dashView: readLS('mb.dashView') === 'cal' ? 'cal' : 'cat',
   calMonth: null,
   calDay: null,
   cat: { c: null, s: null, p: null },
@@ -650,13 +667,18 @@ function call(fn) {
     });
 }
 /** 설정 링크(#connect=...)로 열면 연결 정보를 이 기기에만 저장하고 주소에서 지운다. */
-function readConnectLink() {
-  const m = location.hash.match(/connect=([^&]+)/);
-  if (!m) return;
+function saveConnect(text) {
+  const m = String(text || '').match(/connect=([^&\s]+)/) || String(text || '').trim().match(/^([A-Za-z0-9+/=%]{40,})$/);
+  if (!m) return false;
   try {
     const c = JSON.parse(decodeURIComponent(escape(atob(decodeURIComponent(m[1])))));
-    if (c.url && c.token) { writeLS(LS_API, { url: c.url, token: c.token }); localStorage.removeItem(LS_DATA); }
-  } catch (err) { /* 잘못된 링크는 무시 */ }
+    if (c.url && c.token) { writeLS(LS_API, { url: c.url, token: c.token }); localStorage.removeItem(LS_DATA); return true; }
+  } catch (err) { /* 잘못된 링크 */ }
+  return false;
+}
+function readConnectLink() {
+  if (!/connect=/.test(location.hash)) return;
+  saveConnect(location.hash);
   history.replaceState(null, '', location.pathname + location.search);
 }
 function errText(err) { return String(err && err.message || err).replace(/^Error:\s*/, '').replace(/^(FULL|CHANGED|NOFILE):\s*/, ''); }
@@ -826,7 +848,7 @@ function render() {
 }
 
 function renderNav() {
-  const ni = inboxItems().length + (S.data ? summary().pend.length : 0), np = palItems().length;
+  const ni = inboxItems().length, np = palItems().length;
   $('cntInbox').textContent = ni || '';
   $('cntPal').textContent = np || '';
   document.querySelectorAll('#nav button').forEach(b => b.setAttribute('aria-current', b.dataset.go === S.tab ? 'page' : 'false'));
@@ -905,6 +927,8 @@ function forecast(M) {
 }
 
 function renderDash() {
+  document.querySelectorAll('#dashView button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === S.dashView)));
+  $('catWrap').hidden = S.dashView !== 'cat'; $('calWrap').hidden = S.dashView !== 'cal';
   const M = months(), F = forecast(M), s = F.s;
   const big = $('sumBig');
   $('sumTarget').textContent = '';
@@ -1033,14 +1057,14 @@ function renderTrend(M, F) {
   if (usual.length) svg += `<path d="${area(usual)}" fill="var(--ink)" opacity=".08"/>`;
   if (cur.length) svg += `<path d="${area(cur)}" fill="var(--olive)" opacity=".22"/>`;
   if (F.target) svg += `<line x1="0" x2="${W}" y1="${Y(F.target)}" y2="${Y(F.target)}" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 4"/>`;
-  if (cur.length && M.day < dim) svg += `<path d="M${X(M.day).toFixed(1)} ${Y(last).toFixed(1)}L${X(dim).toFixed(1)} ${Y(F.projected).toFixed(1)}" fill="none" stroke="${over ? 'var(--orange)' : 'var(--olive)'}" stroke-width="1.6" stroke-dasharray="4 4"/>`;
+  if (cur.length && M.day < dim) svg += `<path d="M${X(M.day).toFixed(1)} ${Y(last).toFixed(1)}L${X(dim).toFixed(1)} ${Y(F.projected).toFixed(1)}" fill="none" stroke="var(--olive)" stroke-width="1.6" stroke-dasharray="4 4" opacity=".8"/>`;
   svg += `<path d="${line(cur)}" fill="none" stroke="var(--olive)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
   if (cur.length) svg += `<circle cx="${X(M.day)}" cy="${Y(last)}" r="3.5" fill="var(--olive)"/>`;
   [1, 10, 20, dim].forEach(d => { svg += `<text x="${X(d)}" y="${H - 4}" font-size="10" fill="var(--muted)" text-anchor="${d === 1 ? 'start' : d === dim ? 'end' : 'middle'}">${d}일</text>`; });
   svg += '</svg>';
   box.innerHTML = svg;
-  $('trendKey').innerHTML = `<span><i class="k area"></i>이번 달</span>` + (usual.length ? `<span><i class="k area principal"></i>평소</span>` : '') +
-    `<span><i class="k proj${over ? ' over' : ''}"></i>예상</span>` + (F.target ? `<span><i class="k goal"></i>목표</span>` : '');
+  $('trendKey').innerHTML = `<span><i class="k area"></i>이번 달</span>` + (usual.length ? `<span><i class="k area principal"></i>평달</span>` : '') +
+    `<span><i class="k proj"></i>예상</span>` + (F.target ? `<span><i class="k goal"></i>목표</span>` : '');
 }
 
 /** ── 자산 노트 ───────────────────────────────────────────────────
@@ -1115,7 +1139,7 @@ function renderAssets() {
   // 목록
   const order = (x, y) => (A.owners.indexOf(x.owner) - A.owners.indexOf(y.owner)) || (A.types.indexOf(x.type) - A.types.indexOf(y.type)) || (y.a - x.a);
   const list = items.slice().sort(order);
-  $('asList').innerHTML = list.length ? list.map(x => `<button class="row" data-aid="${esc(x.id)}"><span class="txt"><span class="name">${esc(x.name)}</span><span class="detail">${esc(x.owner)} · ${esc(x.type)}</span></span><span class="amt num${x.type === '부채' ? ' orange' : ''}">${x.type === '부채' ? '−' : ''}${won(x.a)}</span></button>`).join('')
+  $('asList').innerHTML = list.length ? list.map(x => `<button class="row" data-aid="${esc(x.id)}"><span class="txt"><span class="name">${esc(x.name)}</span><span class="detail">${esc(x.owner)} · ${esc(x.type)}</span></span><span class="amt num">${x.type === '부채' ? '−' : ''}${won(x.a)}</span></button>`).join('')
     : `<div class="empty-card">통장, 투자, 연금, 부동산, 대출을 하나씩 추가하면 두 사람 합산 순자산이 나와요.</div>`;
   $('asList')._list = list;
 
@@ -1276,7 +1300,10 @@ async function saveTarget(m, value) {
 function renderFixedTab() {
   const pend = summary().pend;
   $('fixedWrap').hidden = !pend.length;
-  if (pend.length) renderFixedInto($('fixed'), pend); else $('fixed').innerHTML = '';
+  $('fxLabel').textContent = `고정비 체크 · ${pend.length}`;
+  $('fxBody').hidden = !S.fxOpen;
+  $('fxChev').style.transform = S.fxOpen ? 'rotate(180deg)' : '';
+  if (pend.length && S.fxOpen) renderFixedInto($('fixed'), pend); else $('fixed').innerHTML = '';
 }
 
 /** 카테고리: 이번 달(오늘까지) 막대 위에 평소(지난 석 달 같은 기간의 중앙값)를 흐리게 겹친다. 고정비는 뺀다. */
@@ -1291,9 +1318,8 @@ function renderCats(M) {
   const names = new Set(cur.map(e => e.c)); base.forEach(l => l.forEach(e => names.add(e.c)));
   const list = [...names].map(c => ({ c, a: sum(cur.filter(e => e.c === c)), u: usualOf(e => e.c === c) }))
     .filter(x => x.a || x.u >= 10000).sort((x, y) => (y.a - x.a) || (y.u - x.u));
-  $('catWrap').hidden = !list.length;
-  if (!list.length) return;
-  $('catKey').hidden = !M.base.length;
+  $('catKey').hidden = !M.base.length || S.dashView !== 'cat';
+  if (!list.length) { $('cats').innerHTML = '<p class="label empty-note">이번 달 변동 지출이 아직 없어요</p>'; $('catMore').hidden = true; return; }
   const max = Math.max(...list.map(x => Math.max(x.a, x.u)), 1);
   const hasBase = M.base.length > 0;
   /** 한 줄짜리 막대: 회색 트랙 위에 평소(옅은 면 + 눈금), 이번 달은 평소까지 올리브, 넘은 만큼 주황으로 이어진다. */
@@ -1301,13 +1327,16 @@ function renderCats(M) {
     const pa = a / max * 100, pu = u / max * 100;
     let h = hasBase && u ? `<i class="was" style="width:${pu}%"></i>` : '';
     const fill = hasBase && pa > pu
-      ? `background:linear-gradient(90deg, var(--olive) 0 ${pu / pa * 100}%, var(--orange) ${pu / pa * 100}% 100%)` : '';
+      ? `background:linear-gradient(90deg, var(--olive) 0 ${pu / pa * 100}%, var(--mustard) ${pu / pa * 100}% 100%)` : '';
     if (a) h += `<i class="now" style="width:${pa}%;${fill}"></i>`;
     if (hasBase && u) h += `<i class="tick" style="left:calc(${pu}% - 1px)"></i>`;
     return `<span class="cbar">${h}</span>`;
   };
   const entryRows = list => `<div class="entries">${list.map(e => `<button class="e" data-eid="${esc(e.id || key(e))}"><span class="d num">${Number(e.d.slice(5, 7))}/${Number(e.d.slice(8))}</span><span class="n">${esc(e.n || e.s || e.c)}</span><span class="num">${won(e.a)}</span></button>`).join('')}</div>`;
-  $('cats').innerHTML = list.map(x => {
+  const shown = S.catAll ? list : list.slice(0, 5);
+  $('catMore').hidden = list.length <= 5;
+  $('catMore').textContent = S.catAll ? '접기' : `모두 보기 (${list.length})`;
+  $('cats').innerHTML = shown.map(x => {
     const open = S.catOpen === x.c;
     let h = `<button class="cat" data-cat="${esc(x.c)}" aria-expanded="${open}"><span class="top"><span class="name">${catIcon(x.c)}${esc(x.c)}</span><span class="amt num">${won(x.a)}</span></span>${bar(x.a, x.u)}</button>`;
     if (open) {
@@ -2104,6 +2133,9 @@ function bind() {
     const sb = ev.target.closest('button[data-sub]'); if (sb) { S.subOpen = S.subOpen === sb.dataset.sub ? null : sb.dataset.sub; renderDash(); return; }
     const b = ev.target.closest('button[data-cat]'); if (!b) return; S.catOpen = S.catOpen === b.dataset.cat ? null : b.dataset.cat; S.subOpen = null; renderDash();
   });
+  $('dashView').addEventListener('click', ev => { const b = ev.target.closest('button[data-v]'); if (!b) return; S.dashView = b.dataset.v; writeLS('mb.dashView', S.dashView); renderDash(); if (S.dashView === 'cal') renderCalendar(); });
+  $('catMore').addEventListener('click', () => { S.catAll = !S.catAll; renderDash(); });
+  $('fxToggle').addEventListener('click', () => { S.fxOpen = !S.fxOpen; renderFixedTab(); });
   $('flow').addEventListener('click', ev => { const b = ev.target.closest('[data-flow]'); if (b) openFlow(b.dataset.flow); });
   $('lBody').addEventListener('click', ev => { const b = ev.target.closest('button[data-id]'); if (!b) return; const x = findEntry(b.dataset.id); if (x) { closeSheets(); setTimeout(() => openEdit(x), 200); } });
   if (window.ResizeObserver) {
@@ -2180,7 +2212,12 @@ function start() {
     navigator.serviceWorker.register('sw.js').catch(() => {});
   }
   if (!(window.google && google.script && google.script.run) && !apiConf()) {
-    document.body.innerHTML = '<main style="padding:72px 24px;font:15px/1.6 -apple-system,system-ui,sans-serif;color:#1d1b14"><p style="font-size:11px;font-weight:600;letter-spacing:.06em">MONEY BOOK</p><p style="font-size:20px;font-weight:600;margin:8px 0 12px">연결이 필요해요</p><p style="color:rgba(29,27,20,.55)">처음 한 번은 받은 설정 링크로 열어 주세요. 그다음부터는 이 주소로 바로 열립니다.</p></main>';
+    // 홈 화면 앱은 Safari와 저장 공간이 따로라, 설정 링크를 여기에 붙여 넣어 연결한다.
+    document.body.innerHTML = '<main style="padding:72px 24px;font:15px/1.6 -apple-system,system-ui,sans-serif;color:#1d1b14"><p style="font-size:11px;font-weight:600;letter-spacing:.06em">MONEY BOOK</p><p style="font-size:20px;font-weight:600;margin:8px 0 12px">연결이 필요해요</p><p style="color:rgba(29,27,20,.55);margin:0 0 20px">받은 설정 링크를 복사해서 아래에 붙여 넣어 주세요. 이 기기에서는 한 번만 하면 됩니다.</p><textarea id="cIn" rows="4" placeholder="https://…#connect=…" style="width:100%;box-sizing:border-box;border:0;border-radius:14px;background:#f2f1ee;padding:14px;font:13px/1.5 ui-monospace,monospace;color:#1d1b14;resize:none"></textarea><button id="cGo" style="margin-top:12px;width:100%;height:48px;border:0;border-radius:999px;background:#5b5121;color:#fff;font:600 15px -apple-system,system-ui,sans-serif">연결하기</button><p id="cMsg" style="color:#ed6328;font-size:13px;min-height:20px;margin:10px 0 0"></p></main>';
+    document.getElementById('cGo').addEventListener('click', () => {
+      if (saveConnect(document.getElementById('cIn').value)) location.reload();
+      else document.getElementById('cMsg').textContent = '링크를 알아보지 못했어요. 처음부터 끝까지 그대로 붙여 넣어 주세요.';
+    });
     return;
   }
   bind();
