@@ -72,6 +72,29 @@ input, select, textarea { font: inherit; color: inherit; }
 
 /* DASHBOARD */
 .hero { padding: 8px 0 4px; }
+.hero.center { text-align: center; padding: 18px 0 20px; }
+.hero .pct { font-size: 56px; line-height: 60px; font-weight: 300; letter-spacing: -.04em; }
+.hero .pct small { font-size: 20px; letter-spacing: -.01em; font-weight: 400; margin-right: 6px; vertical-align: 6px; color: var(--muted); }
+.hero .pct.over { color: var(--orange); }
+.hero .amts { font-size: 14px; color: var(--muted); margin-top: 6px; }
+.hero .amts b { color: var(--ink); font-weight: 600; }
+.hero.center .verdict { text-align: center; font-size: 15px; line-height: 21px; font-weight: 400; margin: 14px auto 0; max-width: 300px; color: var(--ink); }
+.flow-tiles { margin-bottom: 12px; }
+.flow-tiles .tile { cursor: pointer; }
+.flow-tiles .tile .label svg { opacity: .5; }
+.l-head { display: flex; justify-content: space-between; align-items: baseline; margin: 2px 0 8px; }
+.l-total { font-size: 20px; font-weight: 500; }
+#lBody .rows { max-height: 56vh; overflow-y: auto; }
+#lBody .eq { padding: 4px 16px; }
+#lBody .eq .row { cursor: default; }
+.ic { display: inline-block; width: 24px; font-size: 15px; }
+.k.area.over { background: var(--orange); opacity: .9; }
+.k.tickk { width: 2px; height: 10px; border: 0; background: var(--ink); opacity: .45; border-radius: 1px; }
+.subcats .cat.leaf { cursor: pointer; }
+.entries { padding: 2px 0 8px 22px; }
+.entries .e { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; line-height: 18px; padding: 3px 0; color: var(--muted); width: 100%; text-align: left; }
+.entries .e .n { flex: 1; min-width: 0; text-align: left; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.entries .e .d { width: 40px; flex: none; }
 .hero .big { font-size: 64px; line-height: 68px; font-weight: 300; letter-spacing: -.04em; margin: 6px 0 8px; }
 .hero .big.over { color: var(--orange); }
 .pace { margin-top: 18px; }
@@ -136,13 +159,12 @@ input, select, textarea { font: inherit; color: inherit; }
 .cat .top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
 .cat .name { font-size: 14px; line-height: 19px; }
 .cat .amt { font-size: 14px; white-space: nowrap; }
-.cbar { position: relative; display: block; height: 8px; margin-top: 7px; }
-.cbar i { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 3px; }
-.cbar .was { background: var(--ink); opacity: .1; }
+.cbar { position: relative; display: block; height: 8px; margin-top: 7px; border-radius: 4px; background: color-mix(in srgb, var(--ink) 6%, transparent); }
+.cbar i { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 4px; }
+.cbar .was { background: color-mix(in srgb, var(--ink) 9%, transparent); }
 .cbar .now { background: var(--olive); }
-.cbar .over { background: var(--orange); border-radius: 0 3px 3px 0; }
-.cbar .tick { width: 1.5px; background: var(--ink); opacity: .35; top: -2px; bottom: -2px; border-radius: 1px; }
-.subcats { padding: 0 0 8px 12px; }
+.cbar .tick { width: 2px; background: var(--ink); opacity: .45; top: -3px; bottom: -3px; border-radius: 1px; }
+.subcats { padding: 0 0 8px 22px; }
 .subcats .cat { padding: 6px 0; box-shadow: none; }
 .subcats .name, .subcats .amt { font-size: 12px; color: var(--muted); }
 .subcats .cbar { height: 5px; margin-top: 4px; }
@@ -327,12 +349,16 @@ input, select, textarea { font: inherit; color: inherit; }
   <section class="tab-page" data-tab="dash">
     <div class="page-h"><span class="overline">This month</span><span class="detail" id="sumTarget"></span></div>
 
-    <!-- 1. 판정 -->
-    <div class="hero">
+    <!-- 1. 목표 대비 -->
+    <div class="hero center">
+      <div class="pct num" id="sumBig">—</div>
+      <div class="amts num" id="sumLabel"></div>
       <button class="verdict" id="verdict" aria-label="다른 인사이트 보기">—</button>
-      <div class="label" id="sumLabel"></div>
-      <div class="big num" id="sumBig">—</div>
     </div>
+
+    <!-- 2. 이번 달 개요 -->
+    <div class="tiles flow-tiles" id="flow"></div>
+
     <div class="card trend-card">
       <div id="trend" class="trend"></div>
       <div class="trend-key detail num" id="trendKey"></div>
@@ -341,13 +367,10 @@ input, select, textarea { font: inherit; color: inherit; }
 
     <!-- 3. 카테고리 -->
     <div id="catWrap" hidden>
-      <div class="group-h"><span class="label">카테고리</span><span class="legend detail" id="catKey"><span><i class="lg now"></i>이번 달</span><span><i class="lg was"></i>평소</span></span></div>
+      <div class="group-h"><span class="label">카테고리</span><span class="legend detail" id="catKey"><span><i class="k area"></i>이번 달</span><span><i class="k area over"></i>평소보다 더</span><span><i class="k tickk"></i>평소</span></span></div>
       <div class="rows cats" id="cats"></div>
     </div>
 
-    <!-- 4. 흐름 -->
-    <div class="group-h"><span class="label">이번 달</span></div>
-    <div class="tiles flow-tiles" id="flow"></div>
   </section>
 
   <!-- INBOX -->
@@ -507,6 +530,15 @@ input, select, textarea { font: inherit; color: inherit; }
       <button id="eFav"></button>
       <button id="eDelete">삭제</button>
     </div>
+  </div>
+</div>
+
+<div class="sheet" id="listSheet" role="dialog" aria-label="상세 내역">
+  <div class="sheet-body">
+    <button class="grab" data-close><i></i></button>
+    <div class="sh"><span class="overline" id="lTitle">Detail</span><button class="x" data-close aria-label="닫기"><svg viewBox="0 0 12 12"><path d="M2 2l8 8M10 2l-8 8"/></svg></button></div>
+    <div class="l-head"><span class="label" id="lLabel"></span><span class="l-total num" id="lTotal"></span></div>
+    <div id="lBody"></div>
   </div>
 </div>
 
@@ -875,11 +907,15 @@ function forecast(M) {
 function renderDash() {
   const M = months(), F = forecast(M), s = F.s;
   const big = $('sumBig');
-  $('sumTarget').textContent = F.target ? `목표 ${won(F.target)}` : '';
-  big.textContent = won(s.spent);
+  $('sumTarget').textContent = '';
+  if (F.target) {
+    big.innerHTML = `<small>목표의</small>${Math.round(s.spent / F.target * 100)}%`;
+    $('sumLabel').innerHTML = `<b>${won(s.spent)}</b> / ${won(F.target)}`;
+  } else {
+    big.textContent = won(s.spent);
+    $('sumLabel').textContent = '이번 달 목표는 설정 탭에서 정할 수 있어요';
+  }
   big.classList.toggle('over', !!F.target && s.spent > F.target);
-  $('sumLabel').textContent = F.target ? `지금까지 · 목표의 ${Math.round(s.spent / F.target * 100)}%` : '지금까지';
-  fitBig(big);
   renderInsight(M);
   renderTrend(M, F);
   renderCats(M);
@@ -989,19 +1025,22 @@ function renderTrend(M, F) {
   }
   const last = cur.length ? cur[cur.length - 1] : 0;
   const max = Math.max(F.projected, F.target || 0, usual[usual.length - 1] || 0, last, 1) * 1.06;
-  const X = i => ((i - 0.5) / dim) * W, Y = v => padT + (1 - v / max) * (H - padT - padB);
-  const path = arr => arr.map((v, i) => `${i ? 'L' : 'M'}${X(i + 1).toFixed(1)} ${Y(v).toFixed(1)}`).join('');
+  const X = i => ((i - 1) / Math.max(1, dim - 1)) * W, Y = v => padT + (1 - v / max) * (H - padT - padB);
+  const line = arr => arr.map((v, i) => `${i ? 'L' : 'M'}${X(i + 1).toFixed(1)} ${Y(v).toFixed(1)}`).join('');
+  const area = arr => arr.length ? `${line(arr)}L${X(arr.length).toFixed(1)} ${Y(0).toFixed(1)}L${X(1).toFixed(1)} ${Y(0).toFixed(1)}Z` : '';
+  const over = F.gap != null && F.gap < 0;
   let svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="이번 달 쌓인 지출과 예상">`;
-  if (F.target) svg += `<line x1="0" x2="${W}" y1="${Y(F.target)}" y2="${Y(F.target)}" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 4" opacity=".7"/>`;
-  if (usual.length) svg += `<path d="${path(usual)}" fill="none" stroke="var(--muted)" stroke-width="1.4" stroke-linejoin="round" opacity=".45"/>`;
-  if (cur.length && M.day < dim) svg += `<path d="M${X(M.day).toFixed(1)} ${Y(last).toFixed(1)}L${X(dim).toFixed(1)} ${Y(F.projected).toFixed(1)}" fill="none" stroke="${F.gap != null && F.gap < 0 ? 'var(--orange)' : 'var(--olive)'}" stroke-width="1.6" stroke-dasharray="4 4"/>`;
-  svg += `<path d="${path(cur)}" fill="none" stroke="var(--olive)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  if (usual.length) svg += `<path d="${area(usual)}" fill="var(--ink)" opacity=".08"/>`;
+  if (cur.length) svg += `<path d="${area(cur)}" fill="var(--olive)" opacity=".22"/>`;
+  if (F.target) svg += `<line x1="0" x2="${W}" y1="${Y(F.target)}" y2="${Y(F.target)}" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 4"/>`;
+  if (cur.length && M.day < dim) svg += `<path d="M${X(M.day).toFixed(1)} ${Y(last).toFixed(1)}L${X(dim).toFixed(1)} ${Y(F.projected).toFixed(1)}" fill="none" stroke="${over ? 'var(--orange)' : 'var(--olive)'}" stroke-width="1.6" stroke-dasharray="4 4"/>`;
+  svg += `<path d="${line(cur)}" fill="none" stroke="var(--olive)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
   if (cur.length) svg += `<circle cx="${X(M.day)}" cy="${Y(last)}" r="3.5" fill="var(--olive)"/>`;
   [1, 10, 20, dim].forEach(d => { svg += `<text x="${X(d)}" y="${H - 4}" font-size="10" fill="var(--muted)" text-anchor="${d === 1 ? 'start' : d === dim ? 'end' : 'middle'}">${d}일</text>`; });
   svg += '</svg>';
   box.innerHTML = svg;
-  $('trendKey').innerHTML = `<span><i class="k now"></i>지금</span><span><i class="k proj${F.gap != null && F.gap < 0 ? ' over' : ''}"></i>예상</span>` +
-    (usual.length ? `<span><i class="k was"></i>평소</span>` : '') + (F.target ? `<span><i class="k goal"></i>목표</span>` : '');
+  $('trendKey').innerHTML = `<span><i class="k area"></i>이번 달</span>` + (usual.length ? `<span><i class="k area principal"></i>평소</span>` : '') +
+    `<span><i class="k proj${over ? ' over' : ''}"></i>예상</span>` + (F.target ? `<span><i class="k goal"></i>목표</span>` : '');
 }
 
 /** ── 자산 노트 ───────────────────────────────────────────────────
@@ -1241,6 +1280,10 @@ function renderFixedTab() {
 }
 
 /** 카테고리: 이번 달(오늘까지) 막대 위에 평소(지난 석 달 같은 기간의 중앙값)를 흐리게 겹친다. 고정비는 뺀다. */
+const CAT_ICON = { 식비: '🍚', 생활: '🧺', 교통: '🚇', 미용: '💄', 문화: '🎬', 건강: '💊', 특별: '🎁', 기타지출: '📦', 세금: '🧾', 주거: '🏠', 대출: '🏦', 요금: '📱', 용돈: '👛',
+  급여: '💼', 기타수입: '💵', 저축: '🐷', 투자: '📈', 기타자산: '🗝️' };
+function catIcon(c) { return `<span class="ic" aria-hidden="true">${CAT_ICON[c] || '·'}</span>`; }
+
 function renderCats(M) {
   const v = e => !isFixed(e);
   const cur = M.cur.filter(v), base = M.base.map(b => b.same.filter(v));
@@ -1252,23 +1295,31 @@ function renderCats(M) {
   if (!list.length) return;
   $('catKey').hidden = !M.base.length;
   const max = Math.max(...list.map(x => Math.max(x.a, x.u)), 1);
+  const hasBase = M.base.length > 0;
+  /** 한 줄짜리 막대: 회색 트랙 위에 평소(옅은 면 + 눈금), 이번 달은 평소까지 올리브, 넘은 만큼 주황으로 이어진다. */
   const bar = (a, u) => {
     const pa = a / max * 100, pu = u / max * 100;
-    let h = M.base.length ? `<i class="was" style="width:${pu}%"></i>` : '';
-    h += `<i class="now" style="width:${Math.min(pa, M.base.length ? pu : pa)}%"></i>`;
-    if (M.base.length && pa > pu) h += `<i class="over" style="left:${pu}%;width:${pa - pu}%"></i>`;
-    if (M.base.length && u) h += `<i class="tick" style="left:calc(${pu}% - .75px)"></i>`;
+    let h = hasBase && u ? `<i class="was" style="width:${pu}%"></i>` : '';
+    const fill = hasBase && pa > pu
+      ? `background:linear-gradient(90deg, var(--olive) 0 ${pu / pa * 100}%, var(--orange) ${pu / pa * 100}% 100%)` : '';
+    if (a) h += `<i class="now" style="width:${pa}%;${fill}"></i>`;
+    if (hasBase && u) h += `<i class="tick" style="left:calc(${pu}% - 1px)"></i>`;
     return `<span class="cbar">${h}</span>`;
   };
+  const entryRows = list => `<div class="entries">${list.map(e => `<button class="e" data-eid="${esc(e.id || key(e))}"><span class="d num">${Number(e.d.slice(5, 7))}/${Number(e.d.slice(8))}</span><span class="n">${esc(e.n || e.s || e.c)}</span><span class="num">${won(e.a)}</span></button>`).join('')}</div>`;
   $('cats').innerHTML = list.map(x => {
     const open = S.catOpen === x.c;
-    let h = `<button class="cat" data-cat="${esc(x.c)}" aria-expanded="${open}"><span class="top"><span class="name">${esc(x.c)}</span><span class="amt num">${won(x.a)}</span></span>${bar(x.a, x.u)}</button>`;
+    let h = `<button class="cat" data-cat="${esc(x.c)}" aria-expanded="${open}"><span class="top"><span class="name">${catIcon(x.c)}${esc(x.c)}</span><span class="amt num">${won(x.a)}</span></span>${bar(x.a, x.u)}</button>`;
     if (open) {
       const subs = new Set(cur.filter(e => e.c === x.c).map(e => e.s || '기타'));
       base.forEach(l => l.forEach(e => { if (e.c === x.c) subs.add(e.s || '기타'); }));
-      const sl = [...subs].map(sb => { const f = e => e.c === x.c && (e.s || '기타') === sb; return { sb, a: sum(cur.filter(f)), u: usualOf(f) }; })
+      const sl = [...subs].map(sb => { const f = e => e.c === x.c && (e.s || '기타') === sb; return { sb, f, a: sum(cur.filter(f)), u: usualOf(f) }; })
         .filter(y => y.a || y.u >= 5000).sort((p, q) => (q.a - p.a) || (q.u - p.u));
-      h += `<div class="subcats">${sl.map(y => `<div class="cat"><span class="top"><span class="name">${esc(y.sb)}</span><span class="amt num">${won(y.a)}</span></span>${bar(y.a, y.u)}</div>`).join('')}</div>`;
+      h += `<div class="subcats">${sl.map(y => {
+        const k = x.c + '|' + y.sb, so = S.subOpen === k;
+        const items = cur.filter(y.f).sort((p, q) => q.d.localeCompare(p.d) || q.a - p.a);
+        return `<button class="cat leaf" data-sub="${esc(k)}" aria-expanded="${so}"><span class="top"><span class="name">${esc(y.sb)}</span><span class="amt num">${won(y.a)}</span></span>${bar(y.a, y.u)}</button>` + (so && items.length ? entryRows(items) : '');
+      }).join('')}</div>`;
     }
     return h;
   }).join('');
@@ -1280,9 +1331,35 @@ function renderFlow(M) {
   const inMonth = t => d.entries.filter(e => e.t === t && Number(e.m) === m && yearOf(M.today) === d.year);
   const inc = sum(inMonth('income')), exp = sum(inMonth('expense')), sav = sum(inMonth('saving'));
   const left = inc - exp - sav;
-  const tile = (label, v, cls = '') => `<div class="tile ${cls}"><span class="label">${label}</span><span class="v num">${v}</span></div>`;
-  $('flow').innerHTML = tile('수입', won(inc)) + tile('지출', won(exp)) + tile('저축·투자', won(sav))
-    + tile('남는 돈', (left < 0 ? '−' : '') + won(Math.abs(left)), 'left' + (left < 0 ? ' neg' : ''));
+  const tile = (k, label, v, cls = '') => `<button class="tile ${cls}" data-flow="${k}"><span class="label">${label}${CHEV}</span><span class="v num">${v}</span></button>`;
+  $('flow').innerHTML = tile('income', '수입', won(inc)) + tile('expense', '지출', won(exp)) + tile('saving', '저축·투자', won(sav))
+    + tile('left', '남는 돈', (left < 0 ? '−' : '') + won(Math.abs(left)), 'left' + (left < 0 ? ' neg' : ''));
+}
+
+/** 개요 카드를 누르면: 수입·저축은 내역, 지출은 분류별 합계와 내역, 남는 돈은 계산식 */
+function openFlow(k) {
+  const d = S.data, M = months(), m = M.m;
+  const inMonth = t => d.entries.filter(e => e.t === t && Number(e.m) === m && yearOf(M.today) === d.year);
+  const titles = { income: 'Income', expense: 'Spending', saving: 'Savings', left: 'Left over' };
+  const labels = { income: '이번 달 수입', expense: '이번 달 지출', saving: '이번 달 저축·투자', left: '이번 달 남는 돈' };
+  $('lTitle').textContent = titles[k]; $('lLabel').textContent = labels[k];
+  const row = e => `<button class="row" data-id="${esc(e.id || key(e))}"><span><span class="name">${esc(e.n || e.s || e.c)}</span><span class="detail">${Number(e.d.slice(5, 7))}/${Number(e.d.slice(8))} · ${[e.c, e.s, e.p].filter(Boolean).map(esc).join(' · ')}</span></span><span class="amt num">${won(e.a)}</span></button>`;
+  let body = '';
+  if (k === 'left') {
+    const inc = sum(inMonth('income')), exp = sum(inMonth('expense')), sav = sum(inMonth('saving')), left = inc - exp - sav;
+    $('lTotal').textContent = (left < 0 ? '−' : '') + won(Math.abs(left));
+    body = `<div class="rows eq"><div class="row"><span class="name">수입</span><span class="amt num">${won(inc)}</span></div><div class="row"><span class="name">− 지출</span><span class="amt num">${won(exp)}</span></div><div class="row"><span class="name">− 저축·투자</span><span class="amt num">${won(sav)}</span></div></div>`;
+  } else {
+    const list = inMonth(k).slice().sort((a, b) => b.d.localeCompare(a.d) || b.r - a.r);
+    $('lTotal').textContent = won(sum(list));
+    if (k === 'expense') {
+      const by = groupSum(list, e => e.c), cats = Object.keys(by).sort((a, b) => by[b] - by[a]);
+      body = `<div class="rows eq">${cats.map(c => `<div class="row"><span class="name">${catIcon(c)}${esc(c)}</span><span class="amt num">${won(by[c])}</span></div>`).join('')}</div><div class="group-h"><span class="label">내역</span></div>`;
+    }
+    body += list.length ? `<div class="rows">${list.map(row).join('')}</div>` : '<p class="label empty-note">아직 기록이 없어요</p>';
+  }
+  $('lBody').innerHTML = body;
+  openSheet('listSheet');
 }
 
 /** 지출 캘린더: 날마다 쓴 돈, 무지출일은 점, 날을 누르면 그날 내역 */
@@ -2022,7 +2099,17 @@ function bind() {
     ev.target.value = n ? Number(n).toLocaleString('ko-KR') : '';
   }));
   $('verdict').addEventListener('click', () => renderInsight(months(), 1));
-  $('cats').addEventListener('click', ev => { const b = ev.target.closest('button[data-cat]'); if (!b) return; S.catOpen = S.catOpen === b.dataset.cat ? null : b.dataset.cat; renderDash(); });
+  $('cats').addEventListener('click', ev => {
+    const e = ev.target.closest('button[data-eid]'); if (e) { const x = findEntry(e.dataset.eid); if (x) openEdit(x); return; }
+    const sb = ev.target.closest('button[data-sub]'); if (sb) { S.subOpen = S.subOpen === sb.dataset.sub ? null : sb.dataset.sub; renderDash(); return; }
+    const b = ev.target.closest('button[data-cat]'); if (!b) return; S.catOpen = S.catOpen === b.dataset.cat ? null : b.dataset.cat; S.subOpen = null; renderDash();
+  });
+  $('flow').addEventListener('click', ev => { const b = ev.target.closest('[data-flow]'); if (b) openFlow(b.dataset.flow); });
+  $('lBody').addEventListener('click', ev => { const b = ev.target.closest('button[data-id]'); if (!b) return; const x = findEntry(b.dataset.id); if (x) { closeSheets(); setTimeout(() => openEdit(x), 200); } });
+  if (window.ResizeObserver) {
+    let w0 = 0;
+    new ResizeObserver(es => { const w = Math.round(es[0].contentRect.width); if (w && Math.abs(w - w0) > 2) { w0 = w; if (S.data) { renderDash(); renderAssets(); } } }).observe($('trend'));
+  }
   $('dayList').addEventListener('click', ev => {
     const b = ev.target.closest('button[data-id]'); if (!b) return;
     const e = findEntry(b.dataset.id); if (e) openEdit(e);
