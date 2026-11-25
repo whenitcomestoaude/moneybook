@@ -61,13 +61,19 @@ input, select, textarea { font: inherit; color: inherit; }
 .orange { color: var(--orange); font-weight: 600; }
 
 /* 머리: 큰 날짜, 스크롤과 함께 올라간다 */
-.head .wrap:first-child { display: flex; justify-content: space-between; align-items: baseline; padding-top: 22px; padding-bottom: 2px; }
-.head .h-date { color: var(--muted); }
+.head .wrap:first-child { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 26px; padding-bottom: 6px; min-height: 52px; }
+.ttl { display: flex; align-items: baseline; gap: 8px; white-space: nowrap; }
+.ttl b { font-size: 40px; line-height: 44px; font-weight: 700; letter-spacing: -.03em; }
+.ttl span { font-size: 30px; line-height: 34px; font-weight: 300; color: var(--muted); letter-spacing: -.01em; }
+.h-right { font-size: 14px; color: var(--muted); text-align: right; white-space: nowrap; }
+.h-right b { color: var(--ink); font-weight: 600; margin-left: 4px; }
+.seg.top { display: inline-flex; background: var(--well); border-radius: 999px; padding: 4px; flex: none; }
+.seg.top button { font-size: 14px; line-height: 18px; padding: 8px 14px; border-radius: 999px; color: var(--muted); }
+.seg.top button[aria-pressed="true"] { background: var(--page); color: var(--ink); font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
 .head .sync { text-align: right; min-height: 0; }
 .head .sync:empty { display: none; }
 /* 각 탭의 제목은 머리 줄로 올라갔으므로, 탭 안 첫 머리에서는 제목만 숨기고 곁글은 남긴다 */
-.tab-page > .page-h:first-child > .overline:first-child { display: none; }
-.tab-page > .page-h:first-child { justify-content: flex-end; margin: 4px 0 4px; min-height: 0; }
+.tab-page > .page-h:first-child { display: none; }
 .page-h { display: flex; justify-content: space-between; align-items: baseline; margin: 20px 0 8px; }
 .group-h { display: flex; justify-content: space-between; align-items: baseline; margin: 28px 0 8px; }
 .group-h > :first-child { padding-left: 16px; }
@@ -89,13 +95,24 @@ input, select, textarea { font: inherit; color: inherit; }
 .fx-toggle { display: flex; justify-content: space-between; align-items: center; width: 100%; padding: 22px 0 10px; }
 .fx-toggle svg { width: 14px; height: 14px; opacity: .5; transition: transform .2s; }
 .fx-note { margin: 0 0 8px; line-height: 17px; }
-.hero .pct { font-size: 46px; line-height: 50px; font-weight: 200; letter-spacing: -.03em; }
-.hero .pct small { font-size: 14px; letter-spacing: 0; font-weight: 400; margin-right: 6px; vertical-align: 5px; color: var(--muted); }
+.h-label { font-size: 15px; line-height: 20px; margin-bottom: 6px; }
+.hero .pct { font-size: 64px; line-height: 68px; font-weight: 300; letter-spacing: -.03em; }
+.hero .pct small { font-size: 22px; letter-spacing: 0; font-weight: 400; margin-left: 4px; vertical-align: 22px; }
 .hero .pct.over { color: var(--orange); }
-.hero .amts { font-size: 12px; line-height: 16px; color: var(--muted); margin-top: 8px; letter-spacing: .01em; }
-.hero .amts b { color: var(--ink); font-weight: 400; }
-.hero.center .verdict { text-align: center; font-size: 14px; line-height: 20px; font-weight: 400; margin: 18px auto 0; max-width: 290px; color: var(--ink); min-height: 20px; }
+.hero .amts { font-size: 15px; line-height: 20px; color: var(--muted); margin-top: 6px; }
+.hero .amts b { color: var(--muted); font-weight: 400; }
+.hero.center .verdict { text-align: center; font-size: 14px; line-height: 20px; font-weight: 400; margin: 16px auto 0; max-width: 300px; color: var(--ink); min-height: 20px; }
 .flow-tiles { margin-bottom: 12px; }
+.sum-card { padding: 0 16px 16px; }
+.sum-card .c-h { width: calc(100% + 32px); text-align: left; }
+.stack { display: flex; gap: 3px; height: 12px; border-radius: 6px; overflow: hidden; background: color-mix(in srgb, var(--ink) 7%, transparent); }
+.stack i { display: block; height: 100%; }
+.dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; flex: none; }
+.s-exp { background: var(--bar-over); } .s-sav { background: var(--bar); } .s-left { background: color-mix(in srgb, var(--ink) 14%, transparent); }
+.sum-lg { display: grid; gap: 2px; margin-top: 12px; }
+.sum-row { display: flex; align-items: center; gap: 10px; width: 100%; padding: 5px 0; text-align: left; }
+.sum-row .sl { color: var(--muted); font-size: 14px; flex: 1; white-space: nowrap; }
+.sum-row b { font-size: 15px; font-weight: 600; white-space: nowrap; }
 .flow-tiles .tile { cursor: pointer; }
 .flow-tiles .tile .label svg { opacity: .5; }
 .l-head { display: flex; justify-content: space-between; align-items: baseline; margin: 2px 0 8px; }
@@ -113,14 +130,14 @@ input, select, textarea { font: inherit; color: inherit; }
 .entries .e { display: flex; justify-content: space-between; gap: 12px; font-size: 12px; line-height: 18px; padding: 3px 0; color: var(--muted); width: 100%; text-align: left; }
 .entries .e .n { flex: 1; min-width: 0; text-align: left; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .entries .e .d { width: 40px; flex: none; }
-.hero .big { font-size: 44px; line-height: 50px; font-weight: 200; letter-spacing: -.03em; margin: 6px 0 8px; }
+.hero .big { font-size: 48px; line-height: 54px; font-weight: 300; letter-spacing: -.03em; margin: 2px 0 4px; }
 .hero .big.over { color: var(--orange); }
 .pace { margin-top: 18px; }
 .track { position: relative; height: 6px; border-radius: 999px; background: var(--well); }
 .fill { position: absolute; inset: 0 auto 0 0; border-radius: 999px; background: var(--olive); width: 0; transition: width .5s ease; }
 .mark { position: absolute; top: -4px; width: 2px; height: 14px; border-radius: 1px; background: var(--ink); opacity: .35; }
 .pace-row { display: flex; justify-content: space-between; gap: 12px; margin-top: 8px; }
-.card { background: var(--card); border-radius: 14px; padding: 16px; }
+.card { background: var(--card); border-radius: 20px; padding: 16px; }
 .days { display: grid; grid-template-columns: repeat(16, 1fr); gap: 8px 4px; justify-items: center; }
 .days i { width: 8px; height: 8px; border-radius: 50%; box-shadow: inset 0 0 0 1.5px var(--line); }
 .days i.none { background: var(--olive); box-shadow: none; }
@@ -135,7 +152,7 @@ input, select, textarea { font: inherit; color: inherit; }
 .row.total .amt { font-weight: 500; }
 .tiles { display: grid; gap: 8px; }
 .flow-tiles { grid-template-columns: 1fr 1fr; }
-.tile { background: var(--card); border-radius: 14px; padding: 12px 14px 14px; text-align: left; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.tile { background: var(--card); border-radius: 20px; padding: 12px 14px 14px; text-align: left; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
 .tile .label { display: flex; align-items: center; justify-content: space-between; gap: 4px; white-space: nowrap; }
 .tile .label svg { width: 14px; height: 14px; flex: none; }
 .tile .v { font-size: 17px; line-height: 22px; font-weight: 400; letter-spacing: -.01em; white-space: nowrap; }
@@ -162,17 +179,17 @@ input, select, textarea { font: inherit; color: inherit; }
 #asYears { margin-top: 8px; }
 .trend.proj { height: 150px; }
 .cbar .debt { background: color-mix(in srgb, var(--ink) 35%, transparent); }
-.k.area { border-top: 0; height: 8px; border-radius: 2px; background: var(--olive); opacity: .85; }
+.k.area { border-top: 0; width: 9px; height: 9px; border-radius: 50%; background: var(--olive); opacity: .85; }
 .k.area.principal { background: var(--ink); opacity: .14; }
 .pills.quick { margin: 8px 0 16px; }
 .pills.quick button { font-size: 12px; padding: 6px 10px; }
-.empty-card { background: var(--card); border-radius: 14px; padding: 18px 16px; color: var(--muted); font-size: 13px; line-height: 19px; }
+.empty-card { background: var(--card); border-radius: 20px; padding: 18px 16px; color: var(--muted); font-size: 13px; line-height: 19px; }
 a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
 .legend { display: inline-flex; gap: 12px; }
 .legend span { display: inline-flex; align-items: center; gap: 5px; }
 .lg { display: inline-block; width: 10px; height: 6px; border-radius: 2px; background: var(--olive); }
 .lg.was { background: var(--ink); opacity: .14; }
-.cats { padding: 10px 18px; }
+.cats { padding: 0; }
 .cat { display: block; width: 100%; text-align: left; padding: 12px 0; }
 .cat .top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
 .cat .name { font-size: 14px; line-height: 19px; }
@@ -186,11 +203,15 @@ a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: tran
 .subcats .cat { padding: 6px 0; box-shadow: none; }
 .subcats .name, .subcats .amt { font-size: 12px; color: var(--muted); }
 .subcats .cbar { height: 5px; margin-top: 4px; }
-.sub-rows { padding: 0 16px; background: var(--card); border-radius: 14px; margin-top: 8px; }
+.sub-rows { padding: 0 16px; background: var(--card); border-radius: 20px; margin-top: 8px; }
 .more-row { display: flex; justify-content: flex-end; padding-top: 4px; }
 .chev { width: 12px; height: 12px; fill: none; stroke: var(--muted); stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; margin-left: 6px; vertical-align: -1px; }
 .ins { display: block; font-size: 14px; line-height: 20px; padding: 6px 0; }
-.trend-card { padding: 16px 16px 12px; }
+.trend-card { padding: 0 16px 14px; margin-top: 12px; }
+.c-h { display: flex; justify-content: space-between; align-items: baseline; margin: 0 -16px 14px; padding: 15px 16px 13px; box-shadow: inset 0 -.5px 0 var(--line); font-size: 15px; color: var(--muted); }
+.c-h b { font-size: 18px; color: var(--ink); font-weight: 600; }
+.cat-card { padding: 0 16px 14px; margin-top: 12px; }
+.cat-card .cats { padding: 0; }
 .trend { height: 132px; }
 .trend svg { display: block; overflow: visible; }
 .trend-key { display: flex; gap: 14px; margin-top: 8px; flex-wrap: wrap; }
@@ -202,7 +223,7 @@ a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: tran
 .bar i { display: block; height: 100%; border-radius: 999px; background: var(--olive); }
 
 /* 목록 줄 */
-.rows { background: var(--card); border-radius: 14px; padding: 0 16px; }
+.rows { background: var(--card); border-radius: 20px; padding: 0 16px; }
 .row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; min-height: 52px; padding: 9px 0; width: 100%; text-align: left; }
 .row + .row { box-shadow: 0 -.5px 0 var(--line); }
 .row.lead-row { grid-template-columns: 22px minmax(0, 1fr) auto; }
@@ -218,7 +239,7 @@ a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: tran
 .empty-note { padding: 18px 0; }
 
 /* INBOX */
-.ibx { background: var(--card); border-radius: 14px; padding: 14px 16px; }
+.ibx { background: var(--card); border-radius: 20px; padding: 14px 16px; }
 .ibx + .ibx { margin-top: 12px; }
 .ibx-top { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; }
 .ibx .name { font-size: 14px; line-height: 19px; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
@@ -236,7 +257,7 @@ a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: tran
 .icon-btn { width: 34px; height: 34px; border-radius: 50%; background: var(--well); display: grid; place-items: center; color: var(--muted); }
 .icon-btn svg { width: 14px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round; }
 .icon-btn:disabled { opacity: .3; }
-.cal { background: var(--card); border-radius: 14px; padding: 12px 8px 8px; }
+.cal { background: var(--card); border-radius: 20px; padding: 12px 8px 8px; }
 .cal-w, .cal-g { display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); }
 .cal-w span { text-align: center; font-size: 10px; font-weight: 500; letter-spacing: .03em; color: var(--muted); padding-bottom: 6px; }
 .cal-g button { position: relative; height: 52px; border-radius: 12px; display: grid; align-content: start; justify-items: center; gap: 3px; padding-top: 6px; }
@@ -296,8 +317,8 @@ a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: tran
 .keys button.fn { background: transparent; font-size: 13px; color: var(--muted); }
 .keys svg { width: 20px; height: 14px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; stroke-linejoin: round; vertical-align: middle; }
 .nav { height: 56px; padding: 4px; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-radius: 999px; }
-.nav button { position: relative; display: grid; justify-items: center; align-content: center; gap: 3px; border-radius: 999px; color: var(--muted); font-size: 9px; font-weight: 600; letter-spacing: .04em; min-width: 0; overflow: hidden; }
-.nav button[aria-current="page"] { background: var(--glass-sel); color: var(--ink); }
+.nav button { position: relative; display: grid; justify-items: center; align-content: center; gap: 3px; border-radius: 999px; color: var(--muted); font-size: 12px; font-weight: 500; letter-spacing: .06em; min-width: 0; overflow: hidden; }
+.nav button[aria-current="page"] { background: var(--glass-sel); color: var(--ink); font-weight: 600; }
 .nav svg { width: 20px; height: 20px; fill: none; stroke: currentColor; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
 .nav .cnt { position: absolute; top: 5px; left: calc(50% + 9px); font-size: 10px; font-style: normal; color: var(--orange); letter-spacing: 0; }
 
@@ -357,8 +378,9 @@ a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: tran
 <body>
 <header class="head">
   <div class="wrap">
-    <span class="overline" id="hTitle">This month</span>
-    <span class="overline h-date" id="hDate"></span>
+    <div class="ttl"><b class="num" id="hNum"></b><span id="hWord"></span></div>
+    <div class="h-right" id="hRight"></div>
+    <div class="seg top" id="dashView"><button data-v="cat">카테고리</button><button data-v="cal">캘린더</button></div>
   </div>
   <div class="wrap"><div class="detail sync" id="sync" aria-live="polite"></div>
   </div>
@@ -371,28 +393,28 @@ a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: tran
 
     <!-- 1. 목표 대비 -->
     <div class="hero center">
+      <div class="h-label" id="sumHead"></div>
       <div class="pct num" id="sumBig">—</div>
       <div class="amts num" id="sumLabel"></div>
       <button class="verdict" id="verdict" aria-label="다른 인사이트 보기">—</button>
     </div>
 
     <!-- 2. 이번 달 개요 -->
-    <div class="tiles flow-tiles" id="flow"></div>
+    <div class="card sum-card" id="flow"></div>
 
     <div class="card trend-card">
+      <div class="c-h"><span>누적 지출</span></div>
       <div id="trend" class="trend"></div>
       <div class="trend-key detail num" id="trendKey"></div>
     </div>
 
 
     <!-- 3. 카테고리 / 캘린더 -->
-    <div class="view-h">
-      <div class="seg mini" id="dashView"><button data-v="cat">카테고리</button><button data-v="cal">캘린더</button></div>
-      <span class="legend detail" id="catKey"><span><i class="k area light"></i>이번 달</span><span><i class="k area over"></i>초과</span><span><i class="k tickk"></i>평달</span></span>
-    </div>
-    <div id="catWrap">
-      <div class="rows cats" id="cats"></div>
+    <div id="catWrap" class="card cat-card">
+      <div class="c-h"><span>카테고리</span></div>
+      <div class="cats" id="cats"></div>
       <button class="more-btn detail" id="catMore" hidden></button>
+      <div class="trend-key detail" id="catKey"><span><i class="k area light"></i>이번 달</span><span><i class="k area over"></i>초과</span><span><i class="k tickk"></i>평달</span></div>
     </div>
     <div id="calWrap" hidden>
     <div class="page-h cal-h">
@@ -430,9 +452,9 @@ a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: tran
   <!-- PALIMPSEST -->
   <section class="tab-page" data-tab="pal" hidden>
     <div class="page-h"><span class="overline">Palimpsest</span><span class="detail" id="palNote"></span></div>
-    <div class="pal-hero">
-      <div class="label">팔림프에서 받을 돈</div>
-      <div class="hero"><div class="big num" id="palBig">₩0</div></div>
+    <div class="hero center">
+      <div class="h-label">팔림프에서 받을 돈</div>
+      <div class="big num" id="palBig">₩0</div>
     </div>
     <div class="group-h"><span class="label">대신 결제한 것</span><span class="detail">줄을 두 번 누르면 목록에서 빠져요</span></div>
     <div class="rows" id="pal"></div>
@@ -443,10 +465,10 @@ a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: tran
   <!-- ASSETS -->
   <section class="tab-page" data-tab="assets" hidden>
     <div class="page-h"><span class="overline">Assets</span><span class="detail" id="asUpdated"></span></div>
-    <div class="hero">
-      <div class="label">순자산</div>
+    <div class="hero center">
+      <div class="h-label">순자산</div>
       <div class="big num" id="asBig">—</div>
-      <div class="detail num" id="asDelta"></div>
+      <div class="amts num" id="asDelta"></div>
     </div>
     <div class="tiles owner-tiles" id="asOwners"></div>
 
@@ -510,11 +532,11 @@ a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: tran
     </div>
   </section>
   <nav class="nav glass" id="nav" aria-label="탭">
-    <button data-go="dash" aria-current="page"><svg viewBox="0 0 24 24"><path d="M6 18.5V13M12 18.5V6M18 18.5v-8"/></svg>DASHBOARD</button>
+    <button data-go="dash" aria-current="page"><svg viewBox="0 0 24 24"><path d="M6 18.5V13M12 18.5V6M18 18.5v-8"/></svg>HOME</button>
     <button data-go="inbox"><svg viewBox="0 0 24 24"><path d="M4.5 13.5 6.8 6.5h10.4l2.3 7M4.5 13.5V18h15v-4.5M4.5 13.5h4l1 2h5l1-2h4"/></svg><i class="cnt" id="cntInbox"></i>INBOX</button>
-    <button data-go="pal"><svg viewBox="0 0 24 24"><path d="M7 4.5h10v15l-2-1.3-1.7 1.3-1.3-1.3-1.3 1.3L9 18.2l-2 1.3zM9.5 9h5M9.5 12.5h5"/></svg><i class="cnt" id="cntPal"></i>PALIMPSEST</button>
+    <button data-go="pal"><svg viewBox="0 0 24 24"><path d="M7 4.5h10v15l-2-1.3-1.7 1.3-1.3-1.3-1.3 1.3L9 18.2l-2 1.3zM9.5 9h5M9.5 12.5h5"/></svg><i class="cnt" id="cntPal"></i>CLAIMS</button>
     <button data-go="assets"><svg viewBox="0 0 24 24"><path d="M4 19h16M6 16v-4M10 16V8M14 16v-6M18 16V5"/></svg>ASSETS</button>
-    <button data-go="set"><svg viewBox="0 0 24 24"><path d="M4 7.5h9M17 7.5h3M4 16.5h3M11 16.5h9"/><circle cx="15" cy="7.5" r="2"/><circle cx="9" cy="16.5" r="2"/></svg>SETTINGS</button>
+    <button data-go="set"><svg viewBox="0 0 24 24"><path d="M4 7.5h9M17 7.5h3M4 16.5h3M11 16.5h9"/><circle cx="15" cy="7.5" r="2"/><circle cx="9" cy="16.5" r="2"/></svg>SETUP</button>
   </nav>
 </div>
 
@@ -842,7 +864,6 @@ function render() {
   if (!S.data) return;
   const today = S.data.todayLocal;
   const [y, m, d] = today.split('-').map(Number);
-  $('hDate').textContent = `${DAY_EN[new Date(Date.UTC(y, m - 1, d)).getUTCDay()]} · ${MONTH_NAME[m - 1].slice(0, 3)} ${d}`;
   renderInbox();
   renderFixedTab();
   renderSettings();
@@ -854,9 +875,22 @@ function render() {
   renderNav();
 }
 
-const TAB_TITLE = { dash: 'This month', inbox: 'Inbox', pal: 'Palimpsest', assets: 'Assets', set: 'Settings' };
+/** 머리 줄: Take-out과 같은 '큰 숫자 + 흐린 단어', 오른쪽은 요약 한 줄이나 보기 전환 */
+function renderHead() {
+  const d = S.data; if (!d) return;
+  let num = '', word = '', right = '';
+  if (S.tab === 'dash') { const m = Number(d.todayLocal.slice(5, 7)); num = m; word = MONTH_NAME[m - 1].slice(0, 3); }
+  else if (S.tab === 'inbox') { const l = inboxItems(); num = l.length; word = 'Inbox'; right = l.length ? `합계<b class="num">${won(sum(l))}</b>` : ''; }
+  else if (S.tab === 'pal') { const l = palItems(); num = l.length; word = 'Claims'; right = l.length ? `받을 돈<b class="num">${won(sum(l))}</b>` : ''; }
+  else if (S.tab === 'assets') { const A = assetsData(); num = A.items.length; word = 'Assets'; const u = A.items.map(x => x.u).filter(Boolean).sort().pop(); right = u ? `${Number(u.slice(5, 7))}/${Number(u.slice(8))} 갱신` : ''; }
+  else if (S.tab === 'set') { num = d.year; word = 'Settings'; }
+  $('hNum').textContent = num; $('hWord').textContent = word;
+  $('hRight').innerHTML = right;
+  $('hRight').hidden = S.tab === 'dash';
+  $('dashView').hidden = S.tab !== 'dash';
+}
 function renderNav() {
-  $('hTitle').textContent = TAB_TITLE[S.tab] || '';
+  renderHead();
   const ni = inboxItems().length, np = palItems().length;
   $('cntInbox').textContent = ni || '';
   $('cntPal').textContent = np || '';
@@ -942,11 +976,13 @@ function renderDash() {
   const big = $('sumBig');
   $('sumTarget').textContent = '';
   if (F.target) {
-    big.innerHTML = `<small>목표의</small>${Math.round(s.spent / F.target * 100)}%`;
-    $('sumLabel').innerHTML = `<b>${won(s.spent)}</b> / ${won(F.target)}`;
+    $('sumHead').textContent = `${M.m}월 목표 대비`;
+    big.innerHTML = `${Math.round(s.spent / F.target * 100)}<small>%</small>`;
+    $('sumLabel').innerHTML = `${won(s.spent)} / ${won(F.target)}`;
   } else {
+    $('sumHead').textContent = `${M.m}월 지출`;
     big.textContent = won(s.spent);
-    $('sumLabel').textContent = '이번 달 목표는 설정 탭에서 정할 수 있어요';
+    $('sumLabel').textContent = '목표는 SETUP 탭에서 정할 수 있어요';
   }
   big.classList.toggle('over', !!F.target && s.spent > F.target);
   renderInsight(M);
@@ -1369,9 +1405,12 @@ function renderFlow(M) {
   const inMonth = t => d.entries.filter(e => e.t === t && Number(e.m) === m && yearOf(M.today) === d.year);
   const inc = sum(inMonth('income')), exp = sum(inMonth('expense')), sav = sum(inMonth('saving'));
   const left = inc - exp - sav;
-  const tile = (k, label, v, cls = '') => `<button class="tile ${cls}" data-flow="${k}"><span class="label">${label}${CHEV}</span><span class="v num">${v}</span></button>`;
-  $('flow').innerHTML = tile('income', '수입', won(inc)) + tile('expense', '지출', won(exp)) + tile('saving', '저축·투자', won(sav))
-    + tile('left', '남는 돈', (left < 0 ? '−' : '') + won(Math.abs(left)), 'left' + (left < 0 ? ' neg' : ''));
+  const total = Math.max(inc, exp + sav, 1);
+  const pct = v => Math.max(0, v) / total * 100;
+  const item = (k, cls, label, v) => `<button class="sum-row" data-flow="${k}"><i class="dot ${cls}"></i><span class="sl">${label}</span><b class="num">${(v < 0 ? '−' : '') + won(Math.abs(v))}</b></button>`;
+  $('flow').innerHTML = `<button class="c-h" data-flow="income"><span>${M.m}월 수입</span><b class="num">${won(inc)}</b></button>` +
+    `<span class="stack"><i class="s-exp" style="width:${pct(exp)}%"></i><i class="s-sav" style="width:${pct(sav)}%"></i></span>` +
+    `<div class="sum-lg">${item('expense', 's-exp', '지출', exp)}${item('saving', 's-sav', '저축·투자', sav)}${item('left', 's-left', '남는 돈', left)}</div>`;
 }
 
 /** 개요 카드를 누르면: 수입·저축은 내역, 지출은 분류별 합계와 내역, 남는 돈은 계산식 */
