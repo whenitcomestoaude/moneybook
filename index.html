@@ -22,6 +22,8 @@
   --page: #ffffff; --card: #f6f5f2; --surface: #ffffff;
   --well: rgba(29, 27, 20, .06);
   --ink: #1d1b14; --muted: rgba(29, 27, 20, .5); --line: rgba(29, 27, 20, .1);
+  /* 그래프 색: 머스터드 하나. 연한 것은 기본, 먹색을 섞은 금갈색은 초과·선 */
+  --bar: color-mix(in srgb, var(--mustard) 50%, transparent); --bar-over: color-mix(in srgb, var(--mustard) 70%, var(--ink));
   --olive: #5b5121; --on-olive: #ffffff; --soft: #f0e9c8; --stale: #fce6d4; --mustard: #bfa732; --orange: #ed6328;
   --glass: rgba(255, 255, 255, .82); --glass-sel: rgba(255, 255, 255, .6);
   --shadow-seg: 0 1px 3px rgba(29, 27, 20, .12);
@@ -102,8 +104,9 @@ input, select, textarea { font: inherit; color: inherit; }
 #lBody .eq { padding: 4px 16px; }
 #lBody .eq .row { cursor: default; }
 .ic { display: inline-block; width: 24px; font-size: 15px; }
-.k.area.over { background: var(--olive); opacity: 1; }
-.k.area.light { background: color-mix(in srgb, var(--olive) 42%, transparent); opacity: 1; }
+.k.area.over { background: var(--bar-over); opacity: 1; }
+.k.area.light { background: var(--bar); opacity: 1; }
+.k.area.mus { background: color-mix(in srgb, var(--mustard) 55%, transparent); opacity: 1; }
 .k.tickk { width: 2px; height: 10px; border: 0; background: var(--ink); opacity: .45; border-radius: 1px; }
 .subcats .cat.leaf { cursor: pointer; }
 .entries { padding: 2px 0 8px 22px; }
@@ -126,7 +129,7 @@ input, select, textarea { font: inherit; color: inherit; }
 .card .foot { display: flex; justify-content: space-between; margin-top: 12px; }
 .verdict { display: block; width: 100%; text-align: left; font-size: 20px; line-height: 27px; font-weight: 600; margin: 2px 0 14px; min-height: 27px; text-wrap: pretty; transition: opacity .18s; }
 .verdict.fade { opacity: 0; }
-.k.proj { border-top: 1.6px dashed var(--olive); }
+.k.proj { border-top: 1.6px dashed var(--bar-over); }
 .k.proj.over { border-top-color: var(--orange); }
 .row.total .name { font-weight: 500; }
 .row.total .amt { font-weight: 500; }
@@ -177,7 +180,7 @@ a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: tran
 .cbar { position: relative; display: block; height: 6px; margin-top: 9px; border-radius: 3px; background: color-mix(in srgb, var(--ink) 6%, transparent); }
 .cbar i { position: absolute; top: 0; bottom: 0; left: 0; border-radius: 4px; }
 .cbar .was { background: color-mix(in srgb, var(--ink) 9%, transparent); }
-.cbar .now { background: color-mix(in srgb, var(--olive) 42%, transparent); }
+.cbar .now { background: var(--bar); }
 .cbar .tick { width: 2px; background: var(--ink); opacity: .45; top: -3px; bottom: -3px; border-radius: 1px; }
 .subcats { padding: 0 0 8px 22px; }
 .subcats .cat { padding: 6px 0; box-shadow: none; }
@@ -1061,15 +1064,15 @@ function renderTrend(M, F) {
   const over = F.gap != null && F.gap < 0;
   let svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="이번 달 쌓인 지출과 예상">`;
   if (usual.length) svg += `<path d="${area(usual)}" fill="var(--ink)" opacity=".08"/>`;
-  if (cur.length) svg += `<path d="${area(cur)}" fill="var(--olive)" opacity=".22"/>`;
+  if (cur.length) svg += `<path d="${area(cur)}" fill="var(--mustard)" opacity=".32"/>`;
   if (F.target) svg += `<line x1="0" x2="${W}" y1="${Y(F.target)}" y2="${Y(F.target)}" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 4"/>`;
-  if (cur.length && M.day < dim) svg += `<path d="M${X(M.day).toFixed(1)} ${Y(last).toFixed(1)}L${X(dim).toFixed(1)} ${Y(F.projected).toFixed(1)}" fill="none" stroke="var(--olive)" stroke-width="1.6" stroke-dasharray="4 4" opacity=".8"/>`;
-  svg += `<path d="${line(cur)}" fill="none" stroke="var(--olive)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
-  if (cur.length) svg += `<circle cx="${X(M.day)}" cy="${Y(last)}" r="3.5" fill="var(--olive)"/>`;
+  if (cur.length && M.day < dim) svg += `<path d="M${X(M.day).toFixed(1)} ${Y(last).toFixed(1)}L${X(dim).toFixed(1)} ${Y(F.projected).toFixed(1)}" fill="none" stroke="var(--bar-over)" stroke-width="1.6" stroke-dasharray="4 4" opacity=".8"/>`;
+  svg += `<path d="${line(cur)}" fill="none" stroke="var(--bar-over)" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>`;
+  if (cur.length) svg += `<circle cx="${X(M.day)}" cy="${Y(last)}" r="3.5" fill="var(--bar-over)"/>`;
   [1, 10, 20, dim].forEach(d => { svg += `<text x="${X(d)}" y="${H - 4}" font-size="10" fill="var(--muted)" text-anchor="${d === 1 ? 'start' : d === dim ? 'end' : 'middle'}">${d}일</text>`; });
   svg += '</svg>';
   box.innerHTML = svg;
-  $('trendKey').innerHTML = `<span><i class="k area"></i>이번 달</span>` + (usual.length ? `<span><i class="k area principal"></i>평달</span>` : '') +
+  $('trendKey').innerHTML = `<span><i class="k area mus"></i>이번 달</span>` + (usual.length ? `<span><i class="k area principal"></i>평달</span>` : '') +
     `<span><i class="k proj"></i>예상</span>` + (F.target ? `<span><i class="k goal"></i>목표</span>` : '');
 }
 
@@ -1188,14 +1191,14 @@ function renderProjection(P, plan, years) {
   const line = k => pts.map((p, i) => `${i ? 'L' : 'M'}${X(p.m).toFixed(1)} ${Y(p[k]).toFixed(1)}`).join('');
   const area = k => `${line(k)}L${X(years * 12).toFixed(1)} ${Y(min).toFixed(1)}L0 ${Y(min).toFixed(1)}Z`;
   let svg = `<svg width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${years}년 순자산 예상">`;
-  svg += `<path d="${area('net')}" fill="var(--olive)" opacity=".22"/>`;
+  svg += `<path d="${area('net')}" fill="var(--mustard)" opacity=".32"/>`;
   svg += `<path d="${area('principal')}" fill="var(--ink)" opacity=".1"/>`;
-  svg += `<path d="${line('net')}" fill="none" stroke="var(--olive)" stroke-width="2" stroke-linejoin="round"/>`;
+  svg += `<path d="${line('net')}" fill="none" stroke="var(--bar-over)" stroke-width="2" stroke-linejoin="round"/>`;
   if (plan.goal > 0 && plan.goal <= max) svg += `<line x1="0" x2="${W}" y1="${Y(plan.goal)}" y2="${Y(plan.goal)}" stroke="var(--muted)" stroke-width="1" stroke-dasharray="2 4"/>`;
   [0, 10, 20, 30, 40].forEach(y => { svg += `<text x="${X(y * 12)}" y="${H - 4}" font-size="10" fill="var(--muted)" text-anchor="${y === 0 ? 'start' : y === 40 ? 'end' : 'middle'}">${y ? y + '년' : '지금'}</text>`; });
   svg += '</svg>';
   box.innerHTML = svg;
-  $('asChartKey').innerHTML = `<span><i class="k area"></i>예상 순자산</span><span><i class="k area principal"></i>넣은 돈</span>` + (plan.goal > 0 ? `<span><i class="k goal"></i>목표</span>` : '');
+  $('asChartKey').innerHTML = `<span><i class="k area mus"></i>예상 순자산</span><span><i class="k area principal"></i>넣은 돈</span>` + (plan.goal > 0 ? `<span><i class="k goal"></i>목표</span>` : '');
 }
 
 // 자산 시트
@@ -1333,7 +1336,7 @@ function renderCats(M) {
     const pa = a / max * 100, pu = u / max * 100;
     let h = hasBase && u ? `<i class="was" style="width:${pu}%"></i>` : '';
     const fill = hasBase && pa > pu
-      ? `background:linear-gradient(90deg, color-mix(in srgb, var(--olive) 42%, transparent) 0 ${pu / pa * 100}%, var(--olive) ${pu / pa * 100}% 100%)` : '';
+      ? `background:linear-gradient(90deg, var(--bar) 0 ${pu / pa * 100}%, var(--bar-over) ${pu / pa * 100}% 100%)` : '';
     if (a) h += `<i class="now" style="width:${pa}%;${fill}"></i>`;
     if (hasBase && u) h += `<i class="tick" style="left:calc(${pu}% - 1px)"></i>`;
     return `<span class="cbar">${h}</span>`;
