@@ -117,7 +117,7 @@ input, select, textarea { font: inherit; color: inherit; }
 .flow-tiles .tile .label svg { opacity: .5; }
 .l-head { display: flex; justify-content: space-between; align-items: baseline; margin: 2px 0 8px; }
 .l-total { font-size: 17px; font-weight: 600; }
-#lBody .rows { max-height: 56vh; overflow-y: auto; }
+#lBody .rows { margin-bottom: 4px; }
 #lBody .eq { padding: 4px 16px; }
 #lBody .eq .row { cursor: default; }
 .ic { display: inline-block; width: 24px; font-size: 15px; }
@@ -182,6 +182,8 @@ input, select, textarea { font: inherit; color: inherit; }
 .k.area { border-top: 0; width: 8px; height: 8px; border-radius: 50%; background: var(--olive); opacity: .85; }
 .k.area.principal { background: var(--ink); opacity: .14; }
 .pills.quick { margin: 8px 0 16px; }
+.a-note { margin: -4px 0 12px; line-height: 16px; min-height: 16px; }
+#aSv .two, #aPlain { margin-bottom: 0; }
 .pills.quick button { font-size: 12px; padding: 6px 10px; }
 .empty-card { background: var(--card); border-radius: 14px; padding: 18px 16px; color: var(--muted); font-size: 13px; line-height: 19px; }
 a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
@@ -212,6 +214,9 @@ a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: tran
 .c-h b { font-size: 17px; color: var(--ink); font-weight: 600; }
 .cat-card { padding: 0 16px 14px; margin-top: 12px; }
 .cat-card .cats { padding: 0; }
+.cat-sep { display: flex; justify-content: space-between; font-size: 12px; color: var(--muted); padding: 14px 0 2px; }
+.cat-sep:first-child { padding-top: 0; }
+.cat-sep + .cat { padding-top: 8px; }
 .trend { height: 132px; }
 .trend svg { display: block; overflow: visible; }
 .trend-key { display: flex; gap: 6px 20px; margin-top: 10px; flex-wrap: wrap; font-size: 12px; }
@@ -269,6 +274,8 @@ a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: tran
 .cal-g button[aria-pressed="true"] { background: var(--soft); }
 .cal-g button.out { visibility: hidden; }
 .cal-legend { display: flex; justify-content: space-between; padding: 8px 8px 0; }
+.cal-key { display: inline-flex; align-items: center; gap: 6px; }
+.cal-key .nsd { width: 5px; height: 5px; border-radius: 50%; background: var(--olive); }
 
 /* PALIMPSEST */
 .pal-hero { padding: 8px 0 0; }
@@ -338,7 +345,8 @@ a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: tran
   transform: translateY(105%); transition: transform .26s cubic-bezier(.2, .8, .2, 1);
 }
 .sheet.on { transform: none; }
-.sheet-body { overflow-y: auto; padding: 0 16px 8px; }
+.sheet-body { overflow-y: auto; padding: 0 16px 8px; -webkit-overflow-scrolling: touch; }
+#listSheet .sheet-body { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 28px); }
 .sheet .grab { padding: 8px 0; }
 .sh { display: flex; justify-content: space-between; align-items: center; }
 .x { width: 30px; height: 30px; border-radius: 50%; background: var(--well); display: grid; place-items: center; color: var(--muted); }
@@ -427,7 +435,7 @@ a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: tran
     <div class="cal">
       <div class="cal-w"><span>MON</span><span>TUE</span><span>WED</span><span>THU</span><span>FRI</span><span>SAT</span><span>SUN</span></div>
       <div class="cal-g" id="calGrid"></div>
-      <div class="cal-legend"><span class="detail" id="calTotal"></span><span class="detail">점은 고정비 말고는 안 쓴 날</span></div>
+      <div class="cal-legend"><span class="detail" id="calTotal"></span><span class="detail cal-key"><i class="nsd"></i>무지출 (변동)</span></div>
     </div>
     <div class="group-h"><span class="label" id="dayTitle"></span><span class="label num" id="dayTotal"></span></div>
     <div id="dayList"></div>
@@ -592,12 +600,26 @@ a.row { color: inherit; text-decoration: none; -webkit-tap-highlight-color: tran
   <div class="sheet-body">
     <button class="grab" data-close><i></i></button>
     <div class="sh"><span class="overline" id="aTitle">Asset</span><button class="x" data-close aria-label="닫기"><svg viewBox="0 0 12 12"><path d="M2 2l8 8M10 2l-8 8"/></svg></button></div>
-    <div class="two">
-      <label class="field"><p class="label gh">이름</p><input id="aName" placeholder="예: ISA, 주택청약"></label>
-      <label class="field"><p class="label gh">금액</p><input id="aAmount" inputmode="numeric" class="num" placeholder="₩0"></label>
-    </div>
+    <label class="field"><p class="label gh">이름</p><input id="aName" placeholder="예: ISA, 청년적금, 달러 통장"></label>
     <div class="field"><p class="label gh">누구</p><div class="pills" id="aOwner"></div></div>
     <div class="field"><p class="label gh">종류</p><div class="pills" id="aType"></div></div>
+    <div id="aPlain">
+      <div class="field"><p class="label gh">통화</p><div class="pills" id="aCur"></div></div>
+      <label class="field"><p class="label gh" id="aAmtLabel">금액</p><input id="aAmount" inputmode="decimal" class="num" placeholder="0"></label>
+      <p class="detail a-note" id="aFxNote"></p>
+    </div>
+    <div id="aSv" hidden>
+      <div class="two">
+        <label class="field"><p class="label gh">매달 넣는 돈</p><input id="svMonthly" inputmode="numeric" class="num" placeholder="₩0"></label>
+        <label class="field"><p class="label gh">연 이율 (%)</p><input id="svRate" inputmode="decimal" class="num" placeholder="0"></label>
+      </div>
+      <div class="two">
+        <label class="field"><p class="label gh">첫 납입일</p><input id="svStart" type="date"></label>
+        <label class="field"><p class="label gh">기간 (개월)</p><input id="svMonths" inputmode="numeric" class="num" placeholder="12"></label>
+      </div>
+      <div class="pills quick" id="svMonthsQ"><button data-v="6">6개월</button><button data-v="12">1년</button><button data-v="24">2년</button><button data-v="36">3년</button></div>
+      <p class="detail a-note" id="aSvNote"></p>
+    </div>
   </div>
   <div class="fbar">
     <button class="pri" id="aSave">저장</button>
@@ -1116,8 +1138,30 @@ function renderTrend(M, F) {
  * 금융자산(예금·현금, 투자, 연금)은 기대 수익률로 매달 복리, 매달 넣을 돈도 여기에 더한다.
  * 부동산·기타·부채는 지금 금액 그대로 둔다(가격 변동은 예측하지 않는다).
  */
-const FIN_TYPES = ['예금·현금', '투자', '연금'];
-function assetsData() { const A = S.data.assets || (S.data.assets = { items: [], log: [], plan: { monthly: 0, rate: 5, goal: 0, years: 40 }, types: ['예금·현금', '투자', '연금', '부동산', '기타', '부채'], owners: [] }); return A; }
+const FIN_TYPES = ['예금·현금', '적금', '투자', '연금'];
+const CUR_SIGN = { KRW: '₩', USD: '$', JPY: '¥', EUR: '€', CNY: '元', GBP: '£' };
+function assetsData() { const A = S.data.assets || (S.data.assets = { items: [], log: [], plan: { monthly: 0, rate: 5, goal: 0, years: 40 }, types: ['예금·현금', '적금', '투자', '연금', '부동산', '기타', '부채'], owners: [], currencies: ['KRW', 'USD', 'JPY', 'EUR'], fx: {} }); return A; }
+/** 적금 상태 — 서버 savingStatus_ 와 같은 식(미리보기용) */
+function savingStatus(sv, today) {
+  const monthly = Number(sv.monthly) || 0, months = Math.max(1, Math.round(Number(sv.months) || 12)), rate = Number(sv.rate) || 0;
+  const s = String(sv.start || today);
+  const [sy, sm, sd] = [s.slice(0, 4), s.slice(5, 7), s.slice(8, 10)].map(Number);
+  const [ty, tm, td] = [today.slice(0, 4), today.slice(5, 7), today.slice(8, 10)].map(Number);
+  const paid = Math.max(0, Math.min(months, (ty - sy) * 12 + (tm - sm) + (td >= sd ? 1 : 0)));
+  const endM = sm - 1 + months, end = `${sy + Math.floor(endM / 12)}-${String(endM % 12 + 1).padStart(2, '0')}-${String(sd).padStart(2, '0')}`;
+  const interest = monthly * (rate / 100) * (months * (months + 1) / 2) / 12;
+  const atMaturity = Math.round(monthly * months + interest * (1 - 0.154));
+  const matured = today >= end;
+  return { monthly, months, rate, paid, end, matured, atMaturity, balance: matured ? atMaturity : monthly * paid };
+}
+function fmtCur(cur, v) { const d = cur === 'JPY' || cur === 'KRW' ? 0 : 2; return (CUR_SIGN[cur] || cur + ' ') + Number(v).toLocaleString('ko-KR', { maximumFractionDigits: d }); }
+/** 목록 보조 줄: 적금은 회차와 만기, 외화는 원래 금액과 환율 */
+function assetDetail(x) {
+  const parts = [x.owner, x.type];
+  if (x.sv) parts.push(x.sv.matured ? `만기 · 예상 ${manWon(x.sv.atMaturity)}` : `${x.sv.paid}/${x.sv.months}회 · 만기 ${x.sv.end.slice(2, 7).replace('-', '.')}`);
+  if (x.cur) parts.push(x.rate ? `${fmtCur(x.cur, x.amt)} @${Number(x.rate).toLocaleString('ko-KR', { maximumFractionDigits: 2 })}` : `${fmtCur(x.cur, x.amt)} · 환율 대기`);
+  return parts.filter(Boolean).map(esc).join(' · ');
+}
 function signed(x) { return x.type === '부채' ? -x.a : x.a; }
 function assetTotals(items) {
   const fin = sum(items.filter(x => FIN_TYPES.indexOf(x.type) >= 0));
@@ -1184,7 +1228,7 @@ function renderAssets() {
   // 목록
   const order = (x, y) => (A.owners.indexOf(x.owner) - A.owners.indexOf(y.owner)) || (A.types.indexOf(x.type) - A.types.indexOf(y.type)) || (y.a - x.a);
   const list = items.slice().sort(order);
-  $('asList').innerHTML = list.length ? list.map(x => `<button class="row" data-aid="${esc(x.id)}"><span class="txt"><span class="name">${esc(x.name)}</span><span class="detail">${esc(x.owner)} · ${esc(x.type)}</span></span><span class="amt num">${x.type === '부채' ? '−' : ''}${won(x.a)}</span></button>`).join('')
+  $('asList').innerHTML = list.length ? list.map(x => `<button class="row" data-aid="${esc(x.id)}"><span class="txt"><span class="name">${esc(x.name)}</span><span class="detail">${assetDetail(x)}</span></span><span class="amt num">${x.type === '부채' ? '−' : ''}${won(x.a)}</span></button>`).join('')
     : `<div class="empty-card">통장, 투자, 연금, 부동산, 대출을 하나씩 추가하면 두 사람 합산 순자산이 나와요.</div>`;
   $('asList')._list = list;
 
@@ -1241,26 +1285,59 @@ function renderProjection(P, plan, years) {
 function pillsHtml(list, cur) { return list.map(v => `<button data-v="${esc(v)}" aria-pressed="${v === cur}">${esc(v)}</button>`).join(''); }
 function openAsset(x) {
   const A = assetsData();
-  S.asEdit = x ? Object.assign({}, x) : { id: '', owner: A.owners[0], type: '투자', name: '', a: 0 };
+  S.asEdit = x ? Object.assign({ cur: x.cur || 'KRW' }, x, x.sv ? { sv: Object.assign({}, x.sv) } : {})
+    : { id: '', owner: A.owners[0], type: '투자', name: '', a: 0, cur: 'KRW' };
   $('aTitle').textContent = x ? 'Edit asset' : 'New asset';
   $('aName').value = S.asEdit.name;
-  $('aAmount').value = S.asEdit.a ? S.asEdit.a.toLocaleString('ko-KR') : '';
-  $('aOwner').innerHTML = pillsHtml(A.owners, S.asEdit.owner);
-  $('aType').innerHTML = pillsHtml(A.types, S.asEdit.type);
+  const e = S.asEdit;
+  $('aAmount').value = e.cur && e.cur !== 'KRW' ? (e.amt != null ? String(e.amt) : '') : (e.a ? e.a.toLocaleString('ko-KR') : '');
+  const sv = e.sv || {};
+  $('svMonthly').value = sv.monthly ? Number(sv.monthly).toLocaleString('ko-KR') : '';
+  $('svRate').value = sv.rate != null && sv.rate !== '' ? sv.rate : '';
+  $('svStart').value = sv.start || S.data.todayLocal;
+  $('svMonths').value = sv.months || 12;
+  $('aOwner').innerHTML = pillsHtml(A.owners, e.owner);
   $('aDelete').hidden = !x;
+  renderAssetForm();
   openSheet('assetSheet');
   if (!x) setTimeout(() => $('aName').focus(), 250);
+}
+/** 종류에 따라 칸을 바꾼다: 적금은 납입·기간·이율, 나머지는 통화와 금액 */
+function renderAssetForm() {
+  const A = assetsData(), e = S.asEdit, isSv = e.type === '적금';
+  $('aType').innerHTML = pillsHtml(A.types, e.type);
+  $('aSv').hidden = !isSv; $('aPlain').hidden = isSv;
+  $('aCur').innerHTML = pillsHtml(A.currencies || ['KRW'], e.cur || 'KRW');
+  $('aAmtLabel').textContent = e.cur && e.cur !== 'KRW' ? `금액 (${e.cur})` : '금액 (원)';
+  $('aAmount').setAttribute('placeholder', fmtCur(e.cur || 'KRW', 0));
+  const fx = (A.fx || {})[e.cur];
+  const raw = Number(String($('aAmount').value).replace(/[^\d.]/g, '')) || 0;
+  $('aFxNote').textContent = e.cur && e.cur !== 'KRW'
+    ? (fx ? `환율 ${Number(fx.rate).toLocaleString('ko-KR', { maximumFractionDigits: 2 })} · 지금 ${won(Math.round(raw * fx.rate))} · 환율은 앱을 열 때마다 새로 받아요` : '환율은 저장하면 Google Finance에서 받아 와요')
+    : '';
+  if (isSv) {
+    const st = savingStatus(svFromForm(), S.data.todayLocal);
+    $('aSvNote').textContent = st.monthly ? `지금까지 ${won(st.balance)} (${st.paid}/${st.months}회) · ${st.end.replace(/-/g, '.')} 만기 · 받을 돈 약 ${won(st.atMaturity)} (세후, 단리 추정)` : '';
+  }
+}
+function svFromForm() {
+  return { monthly: Number($('svMonthly').value.replace(/[^\d]/g, '')) || 0, rate: Number($('svRate').value.replace(/[^\d.]/g, '')) || 0,
+    start: $('svStart').value || S.data.todayLocal, months: Number($('svMonths').value.replace(/[^\d]/g, '')) || 12 };
 }
 async function saveAssetUI() {
   const x = S.asEdit; if (!x) return;
   x.name = $('aName').value.trim();
-  x.a = Number($('aAmount').value.replace(/[^\d]/g, '')) || 0;
   if (!x.name) { toast('이름을 적어 주세요'); return; }
+  const raw = String($('aAmount').value).replace(/[^\d.]/g, '');
+  const payload = { id: x.id, owner: x.owner, type: x.type, name: x.name };
+  if (x.type === '적금') payload.sv = svFromForm();
+  else if (x.cur && x.cur !== 'KRW') { payload.cur = x.cur; payload.amt = Number(raw) || 0; }
+  else payload.a = Math.round(Number(raw) || 0);
   const btn = $('aSave'); btn.disabled = true;
   try {
-    const res = await call('saveAsset', { id: x.id, owner: x.owner, type: x.type, name: x.name, a: x.a });
+    const res = await call('saveAsset', payload);
     S.data.assets = Object.assign(assetsData(), res);
-    closeSheets(); renderAssets(); cacheData();
+    closeSheets(); renderAssets(); renderNav(); cacheData();
     toast(x.id ? '고쳤어요' : '추가했어요');
   } catch (err) { toast('저장하지 못했어요: ' + errText(err)); }
   finally { btn.disabled = false; }
@@ -1357,18 +1434,22 @@ const CAT_ICON = { 식비: '🍚', 생활: '🧺', 교통: '🚇', 미용: '💄
 function catIcon(c) { return `<span class="ic" aria-hidden="true">${CAT_ICON[c] || '·'}</span>`; }
 
 function renderCats(M) {
-  const v = e => !isFixed(e);
-  const cur = M.cur.filter(v), base = M.base.map(b => b.same.filter(v));
-  const usualOf = f => median(base.map(l => sum(l.filter(f))));
-  const names = new Set(cur.map(e => e.c)); base.forEach(l => l.forEach(e => names.add(e.c)));
-  const list = [...names].map(c => ({ c, a: sum(cur.filter(e => e.c === c)), u: usualOf(e => e.c === c) }))
-    .filter(x => x.a || x.u >= 10000).sort((x, y) => (y.a - x.a) || (y.u - x.u));
-  $('catKey').hidden = !M.base.length || S.dashView !== 'cat';
-  if (!list.length) { $('cats').innerHTML = '<p class="label empty-note">이번 달 변동 지출이 아직 없어요</p>'; $('catMore').hidden = true; return; }
-  const max = Math.max(...list.map(x => Math.max(x.a, x.u)), 1);
   const hasBase = M.base.length > 0;
-  /** 한 줄짜리 막대: 회색 트랙 위에 평소(옅은 면 + 눈금), 이번 달은 평소까지 올리브, 넘은 만큼 주황으로 이어진다. */
-  const bar = (a, u) => {
+  /** 변동 지출과 고정비를 따로 묶어, 같은 막대 문법으로 그린다. 막대 길이는 묶음 안에서만 비교한다. */
+  const group = keep => {
+    const cur = M.cur.filter(keep), base = M.base.map(b => b.same.filter(keep));
+    const usualOf = f => median(base.map(l => sum(l.filter(f))));
+    const names = new Set(cur.map(e => e.c)); base.forEach(l => l.forEach(e => names.add(e.c)));
+    const list = [...names].map(c => ({ c, a: sum(cur.filter(e => e.c === c)), u: usualOf(e => e.c === c) }))
+      .filter(x => x.a || x.u >= 10000).sort((x, y) => (y.a - x.a) || (y.u - x.u));
+    return { cur, base, usualOf, list, max: Math.max(1, ...list.map(x => Math.max(x.a, x.u))) };
+  };
+  const V = group(e => !isFixed(e)), F = group(e => isFixed(e));
+  $('catKey').hidden = !hasBase || S.dashView !== 'cat';
+  $('catMore').hidden = true;
+  if (!V.list.length && !F.list.length) { $('cats').innerHTML = '<p class="label empty-note">이번 달 지출이 아직 없어요</p>'; return; }
+  /** 한 줄짜리 막대: 회색 트랙 위에 평달(옅은 면 + 눈금), 이번 달은 평달까지 연하게, 넘은 만큼 진하게 이어진다. */
+  const bar = (a, u, max) => {
     const pa = a / max * 100, pu = u / max * 100;
     let h = hasBase && u ? `<i class="was" style="width:${pu}%"></i>` : '';
     const fill = hasBase && pa > pu
@@ -1378,25 +1459,24 @@ function renderCats(M) {
     return `<span class="cbar">${h}</span>`;
   };
   const entryRows = list => `<div class="entries">${list.map(e => `<button class="e" data-eid="${esc(e.id || key(e))}"><span class="d num">${Number(e.d.slice(5, 7))}/${Number(e.d.slice(8))}</span><span class="n">${esc(e.n || e.s || e.c)}</span><span class="num">${won(e.a)}</span></button>`).join('')}</div>`;
-  const shown = S.catAll ? list : list.slice(0, 5);
-  $('catMore').hidden = list.length <= 5;
-  $('catMore').textContent = S.catAll ? '접기' : `모두 보기 (${list.length})`;
-  $('cats').innerHTML = shown.map(x => {
+  const rows = G => G.list.map(x => {
     const open = S.catOpen === x.c;
-    let h = `<button class="cat" data-cat="${esc(x.c)}" aria-expanded="${open}"><span class="top"><span class="name">${catIcon(x.c)}${esc(x.c)}</span><span class="amt num">${won(x.a)}</span></span>${bar(x.a, x.u)}</button>`;
+    let h = `<button class="cat" data-cat="${esc(x.c)}" aria-expanded="${open}"><span class="top"><span class="name">${catIcon(x.c)}${esc(x.c)}</span><span class="amt num">${won(x.a)}</span></span>${bar(x.a, x.u, G.max)}</button>`;
     if (open) {
-      const subs = new Set(cur.filter(e => e.c === x.c).map(e => e.s || '기타'));
-      base.forEach(l => l.forEach(e => { if (e.c === x.c) subs.add(e.s || '기타'); }));
-      const sl = [...subs].map(sb => { const f = e => e.c === x.c && (e.s || '기타') === sb; return { sb, f, a: sum(cur.filter(f)), u: usualOf(f) }; })
+      const subs = new Set(G.cur.filter(e => e.c === x.c).map(e => e.s || '기타'));
+      G.base.forEach(l => l.forEach(e => { if (e.c === x.c) subs.add(e.s || '기타'); }));
+      const sl = [...subs].map(sb => { const f = e => e.c === x.c && (e.s || '기타') === sb; return { sb, f, a: sum(G.cur.filter(f)), u: G.usualOf(f) }; })
         .filter(y => y.a || y.u >= 5000).sort((p, q) => (q.a - p.a) || (q.u - p.u));
       h += `<div class="subcats">${sl.map(y => {
         const k = x.c + '|' + y.sb, so = S.subOpen === k;
-        const items = cur.filter(y.f).sort((p, q) => q.d.localeCompare(p.d) || q.a - p.a);
-        return `<button class="cat leaf" data-sub="${esc(k)}" aria-expanded="${so}"><span class="top"><span class="name">${esc(y.sb)}</span><span class="amt num">${won(y.a)}</span></span>${bar(y.a, y.u)}</button>` + (so && items.length ? entryRows(items) : '');
+        const items = G.cur.filter(y.f).sort((p, q) => q.d.localeCompare(p.d) || q.a - p.a);
+        return `<button class="cat leaf" data-sub="${esc(k)}" aria-expanded="${so}"><span class="top"><span class="name">${esc(y.sb)}</span><span class="amt num">${won(y.a)}</span></span>${bar(y.a, y.u, G.max)}</button>` + (so && items.length ? entryRows(items) : '');
       }).join('')}</div>`;
     }
     return h;
   }).join('');
+  const head = (label, G) => `<div class="cat-sep"><span>${label}</span><span class="num">${won(sum(G.list))}</span></div>`;
+  $('cats').innerHTML = (V.list.length ? head('변동', V) + rows(V) : '') + (F.list.length ? head('고정', F) + rows(F) : '');
 }
 
 /** 이번 달 수입 · 지출 · 저축 · 남는 돈 */
@@ -2163,7 +2243,10 @@ function bind() {
   $('asAdd').addEventListener('click', () => openAsset(null));
   $('asList').addEventListener('click', ev => { const b = ev.target.closest('[data-aid]'); if (!b) return; const x = assetsData().items.find(i => i.id === b.dataset.aid); if (x) openAsset(x); });
   $('aOwner').addEventListener('click', ev => { const b = ev.target.closest('button[data-v]'); if (!b) return; S.asEdit.owner = b.dataset.v; $('aOwner').innerHTML = pillsHtml(assetsData().owners, S.asEdit.owner); });
-  $('aType').addEventListener('click', ev => { const b = ev.target.closest('button[data-v]'); if (!b) return; S.asEdit.type = b.dataset.v; $('aType').innerHTML = pillsHtml(assetsData().types, S.asEdit.type); });
+  $('aType').addEventListener('click', ev => { const b = ev.target.closest('button[data-v]'); if (!b) return; S.asEdit.type = b.dataset.v; renderAssetForm(); });
+  $('aCur').addEventListener('click', ev => { const b = ev.target.closest('button[data-v]'); if (!b) return; S.asEdit.cur = b.dataset.v; $('aAmount').value = ''; renderAssetForm(); });
+  $('svMonthsQ').addEventListener('click', ev => { const b = ev.target.closest('button[data-v]'); if (!b) return; $('svMonths').value = b.dataset.v; renderAssetForm(); });
+  ['svRate', 'svStart', 'svMonths'].forEach(id => $(id).addEventListener('input', renderAssetForm));
   $('aSave').addEventListener('click', saveAssetUI);
   $('aDelete').addEventListener('click', deleteAssetUI);
   $('asPlan').addEventListener('click', ev => { const b = ev.target.closest('[data-plan]'); if (b) openPlan(b.dataset.plan); });
@@ -2171,9 +2254,16 @@ function bind() {
   $('pMonthlyQ').addEventListener('click', ev => { const b = ev.target.closest('button[data-v]'); if (b) $('pMonthly').value = Number(b.dataset.v).toLocaleString('ko-KR'); });
   $('pGoalQ').addEventListener('click', ev => { const b = ev.target.closest('button[data-v]'); if (b) $('pGoal').value = Number(b.dataset.v).toLocaleString('ko-KR'); });
   $('pSave').addEventListener('click', savePlanUI);
-  ['aAmount', 'pMonthly', 'pGoal'].forEach(id => $(id).addEventListener('input', ev => {
+  $('aAmount').addEventListener('input', ev => {
+    const e = S.asEdit || {};
+    if (e.cur && e.cur !== 'KRW') { ev.target.value = ev.target.value.replace(/[^\d.]/g, ''); }
+    else { const n = ev.target.value.replace(/[^\d]/g, ''); ev.target.value = n ? Number(n).toLocaleString('ko-KR') : ''; }
+    renderAssetForm();
+  });
+  ['svMonthly', 'pMonthly', 'pGoal'].forEach(id => $(id).addEventListener('input', ev => {
     const n = ev.target.value.replace(/[^\d]/g, '');
     ev.target.value = n ? Number(n).toLocaleString('ko-KR') : '';
+    if (id === 'svMonthly') renderAssetForm();
   }));
   $('verdict').addEventListener('click', () => renderInsight(months(), 1));
   $('cats').addEventListener('click', ev => {
